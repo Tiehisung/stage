@@ -1,6 +1,6 @@
 "use client";
 
-import FormSubmitBtn, { ClickButton } from "@/components/buttons/formBtn";
+import FormSubmitBtn, { Button } from "@/components/buttons/SubmitAndClick";
 import { baseUrl } from "@/lib/configs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function AddNewFixture() {
     date: "",
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWaiting(true);
     const response = await fetch(baseUrl() + "/api/fixtures", {
@@ -33,7 +33,7 @@ export default function AddNewFixture() {
   };
 
   //handle onchange
-  const OnChange = (e) => {
+  const OnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -86,15 +86,26 @@ export default function AddNewFixture() {
           disabled={waiting}
           waitingText={"Saving fixture..."}
           primaryText={"Add"}
-          styles="secondary__btn px-3 text-green-400"
+          className="secondary__btn px-3 text-green-400"
         />
       </form>
     </div>
   );
 }
 
-export function DisplayFixtures({ fixtures }) {
-  const [fixtureToEdit, setFixtureToEdit] = useState(null);
+interface Fixture {
+  _id: string;
+  host: string;
+  visitors: string;
+  date: string;
+}
+
+interface DisplayFixturesProps {
+  fixtures: Fixture[];
+}
+
+export function DisplayFixtures({ fixtures }: DisplayFixturesProps) {
+  const [fixtureToEdit, setFixtureToEdit] = useState<Fixture | null>(null);
 
   return (
     <div>
@@ -115,12 +126,12 @@ export function DisplayFixtures({ fixtures }) {
               </td>
               <td className="px-2 py-2">{fixture.date}</td>
               <td className="px-2 py-2 flex gap-2 text-sm ">
-                <ClickButton
+                <Button
                   handleClickEvent={() => {
                     setFixtureToEdit(fixture);
                   }}
                   primaryText={"Edit"}
-                  styles="text-green-500"
+                  className="text-green-500"
                 />
                 <DeleteFixture fixtureId={fixture._id} />
               </td>
@@ -137,7 +148,7 @@ export function DisplayFixtures({ fixtures }) {
   );
 }
 
-export function EditFixture({ fixture, setFixtureToEdit }) {
+export function EditFixture({ fixture, setFixtureToEdit }: { fixture: Fixture | null, setFixtureToEdit: React.Dispatch<React.SetStateAction<Fixture | null>> }) {
   const router = useRouter();
   const [waiting, setWaiting] = useState(false);
   const [formData, setFormData] = useState({
@@ -146,7 +157,7 @@ export function EditFixture({ fixture, setFixtureToEdit }) {
     date: fixture?.date,
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWaiting(true);
     const response = await fetch(baseUrl() + "/api/fixtures", {
@@ -154,8 +165,8 @@ export function EditFixture({ fixture, setFixtureToEdit }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...formData,
-        date: formData.date.substring(0, 10),
-        _id: fixture._id,
+        date: formData.date?.substring(0, 10) || "",
+        _id: fixture?._id || "",
       }),
       cache: "no-cache",
     });
@@ -170,7 +181,7 @@ export function EditFixture({ fixture, setFixtureToEdit }) {
   };
 
   //handle onchange
-  const OnChange = (e) => {
+  const OnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -230,19 +241,19 @@ export function EditFixture({ fixture, setFixtureToEdit }) {
           disabled={waiting}
           waitingText={"Saving changes..."}
           primaryText={"Save changes"}
-          styles="secondary__btn px-3 mt-2"
+          className="secondary__btn px-3 mt-2"
         />
       </form>
     </div>
   );
 }
 
-export function DeleteFixture({ fixtureId }) {
+export function DeleteFixture({ fixtureId }: { fixtureId: string }) {
   const router = useRouter();
 
   const [waiting, setWaiting] = useState(false);
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setWaiting(true);
     const response = await fetch(baseUrl() + "/api/fixtures", {
@@ -260,14 +271,14 @@ export function DeleteFixture({ fixtureId }) {
     router.refresh();
   };
   return (
-    <ClickButton
+    <Button
       waiting={waiting}
       disabled={waiting}
       waitingText=""
       handleClickEvent={handleDelete}
-      styles=" px-2 flex items-center text-red-600"
+      className=" px-2 flex items-center text-red-600"
     >
-      <RiDeleteBin6Line className={waiting && "hidden"} />
-    </ClickButton>
+      <RiDeleteBin6Line className={waiting ? "hidden":''} />
+    </Button>
   );
 }

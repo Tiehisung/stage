@@ -5,13 +5,11 @@ export default withAuth(
   function middleware(request) {
     const pathname = request.nextUrl.pathname;
     console.log("pathname", pathname);
-    const token = request.nextauth.token;
+    const token = request.nextauth?.token;
     console.log("token@midware", token);
     //When accessing admin pages
-    if (pathname.startsWith("/admin")) {
-      if (token?.role == "admin")
-        return NextResponse.rewrite(new URL("/admin", request.url));
-      else return NextResponse.rewrite(new URL("/", request.url));
+    if (pathname.startsWith("/admin") && token?.role !== "admin") {
+      return NextResponse.redirect(new URL("/", request.url));
     }
   },
   {

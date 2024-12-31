@@ -1,4 +1,6 @@
 import { ITeamProps } from "@/components/fixturesAndResults";
+import _players from "./players";
+import { IFileProps } from "@/types/interface";
 
 export const teamKFC = {
   _id: "1",
@@ -20,127 +22,82 @@ const teams: ITeamProps[] = [
     _id: "2",
     name: "Barcelona",
     alias: "FCB",
-    logo: {
-      _id: "2",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "barcelona_logo",
-    },
+    logo: _players[0].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "3",
     name: "Manchester United",
     alias: "MU",
-    logo: {
-      _id: "3",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "manchester_united_logo",
-    },
+    logo: _players[1].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "4",
     name: "Liverpool",
     alias: "LFC",
-    logo: {
-      _id: "4",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "liverpool_logo",
-    },
+    logo: _players[2].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "5",
     name: "Bayern Munich",
     alias: "FCB",
-    logo: {
-      _id: "5",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "bayern_munich_logo",
-    },
+    logo: _players[3].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "6",
     name: "Borussia Dortmund",
     alias: "BVB",
-    logo: {
-      _id: "6",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "borussia_dortmund_logo",
-    },
+    logo: _players[4].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "7",
     name: "Juventus",
     alias: "JUVE",
-    logo: {
-      _id: "7",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "juventus_logo",
-    },
+    logo: _players[5].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "8",
     name: "Inter Milan",
     alias: "INT",
-    logo: {
-      _id: "8",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "inter_milan_logo",
-    },
+    logo: _players[6].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "9",
     name: "Paris Saint-Germain",
     alias: "PSG",
-    logo: {
-      _id: "9",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "paris_saint_germain_logo",
-    },
+    logo: _players[0].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
   {
     _id: "10",
     name: "Marseille",
     alias: "OM",
-    logo: {
-      _id: "10",
-      secure_url:
-        "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-      resource_type: "image",
-      public_id: "marseille_logo",
-    },
+    logo: _players[1].avatar as IFileProps,
     createdAt: "2023-11-28T10:30:00Z",
     updatedAt: "2023-11-28T10:30:00Z",
+    community: "",
   },
 ];
 

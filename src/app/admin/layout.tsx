@@ -50,16 +50,16 @@ export function LeftPane() {
       className={`max-md:hidden bg-[#faf9f9] w-[220px] h-[90vh] overflow-y-auto`}
     >
       <ul className="grid gap-3 h-fit text-blue-500 ">
-        <Link href={"/admin/fixtures"}>
+        <Link href={"/admin/matches"}>
           <li
             className={`px-1 flex items-center gap-2 h-10  text-sm ${
-              activeLink("/admin/fixtures")
+              activeLink("/admin/matches")
                 ? "bg-blue-300 hover:bg-blue-300 text-white"
                 : "hover:bg-slate-100"
             }`}
           >
             <CgDatabase className="text-3xl " />
-            Fixtures
+            Matches
           </li>
         </Link>
 
@@ -192,17 +192,17 @@ export function LeftPaneMobile({
         <Link
           onClick={() => setIsOpen((p) => !p)}
           className="h-10 border "
-          href={"/admin/fixtures"}
+          href={"/admin/matches"}
         >
           <li
             className={`px-1 w-full h-10  flex gap-2 items-center  ${
-              activeLink("/admin/fixtures")
+              activeLink("/admin/matches")
                 ? "bg-blue-300 hover:bg-blue-300 text-white"
                 : "hover:bg-slate-100"
             }`}
           >
             <CgDatabase className="text-3xl " />
-            Fixtures
+            Matches
           </li>
         </Link>
 

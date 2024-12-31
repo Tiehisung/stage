@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import { VscLoading } from "react-icons/vsc";
 
 interface ButtonProps {
@@ -39,7 +40,7 @@ export default function FormSubmitBtn({
 }
 
 interface ClickButtonProps extends ButtonProps {
-  handleClickEvent?: () => void;
+  handleClickEvent?: MouseEventHandler<HTMLButtonElement>
   title?: string;
 }
 

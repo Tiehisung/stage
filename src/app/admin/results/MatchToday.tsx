@@ -1,14 +1,23 @@
 "use client";
 
-import { ClickButton } from "@/components/buttons/formBtn";
 import Image from "next/image";
-import playerImage from "@/public/images/breakfast2.jpg";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, MouseEventHandler, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { baseUrl } from "@/lib/configs";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/buttons/SubmitAndClick";
+import { staticPeople } from "@/assets/images";
+interface Fixture {
+  _id:string
+  host: string;
+  visitors: string;
+  date: string;
+  hostScore: number;
+  visitorsScore: number;
+  fixtureId: string;
+}
 
-export default function MatchToday({ fixtures }) {
+export default function MatchToday({ fixtures }:{ fixtures:Fixture[]}) {
   const router = useRouter();
   const [waiting, setWaiting] = useState({
     start: false,
@@ -30,7 +39,7 @@ export default function MatchToday({ fixtures }) {
   if (!todayFixture) return; //Return if not found
 
   //Finish up a match
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWaiting({ ...waiting, finish: true });
     const response = await fetch(baseUrl() + "/api/match-results", {
@@ -46,7 +55,7 @@ export default function MatchToday({ fixtures }) {
     router.refresh();
   };
 
-  const OnChangeScore = (e) => {
+  const OnChangeScore = (e:ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -60,7 +69,7 @@ export default function MatchToday({ fixtures }) {
           <tr className="border p-2 rounded-md flex w-fit bg-gray-300">
             <td className="flex items-center text-center text-3xl">
               <Image
-                src={playerImage}
+                src={staticPeople.rufai}
                 width={100}
                 height={100}
                 alt="desc image"
@@ -89,7 +98,7 @@ export default function MatchToday({ fixtures }) {
             <td className="flex items-center text-center text-3xl">
               <span>{todayFixture?.visitors}</span>
               <Image
-                src={playerImage}
+                src={staticPeople.rufai}
                 width={100}
                 height={100}
                 alt="desc image"
@@ -101,27 +110,29 @@ export default function MatchToday({ fixtures }) {
       </table>
 
       <div className="flex gap-2 justify-between">
-        <ClickButton
+        <Button
           primaryText={"Start"}
           waiting={waiting.start}
           disabled={waiting.start}
           waitingText="Starting match..."
-          styles="text-[green]"
+          className="text-[green]"
         />
-        <ClickButton
+        <Button
           primaryText={"Cancel"}
           waiting={waiting.cancel}
           disabled={waiting.cancel}
           waitingText="Canceling match..."
-          styles="text-[red]"
+          className="text-[red]"
         />
-        <ClickButton
+        <Button
           primaryText={"Finish"}
           waiting={waiting.finish}
           disabled={waiting.finish}
           waitingText="Saving match..."
-          handleClickEvent={handleSubmit}
-          styles="text-[blue]"
+          handleClickEvent={
+            handleSubmit as unknown as MouseEventHandler<HTMLButtonElement>
+          }
+          className="text-[blue]"
         />
       </div>
       <ToastContainer />

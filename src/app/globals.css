@@ -35,8 +35,6 @@ body {
   @apply dark:bg-white dark:text-black;
   background-image: url("../assets/images/bg/body-bg.jpg");
 }
-body {
-}
 
 /* Link */
 .simple__link {
@@ -50,6 +48,10 @@ body {
 }
 .secondary__link {
   @apply text-gray-950 hover:text-gray-800 border font-sans hover:bg-slate-100 hover:rounded-md px-2 py-1 disabled:bg-slate-200 disabled:text-green-800;
+}
+/* label */
+._label {
+  @apply font-semibold text-gray-400 text-sm mb-2 mt-4;
 }
 
 /* Scrollbar */

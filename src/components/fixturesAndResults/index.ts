@@ -27,6 +27,7 @@ export interface IMatchProps {
 export interface ITeamProps {
   _id: string;
   name: string;
+  community:string 
   alias: string;
   logo: IFileProps;
   createdAt: string;

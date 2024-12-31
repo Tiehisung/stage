@@ -1,8 +1,7 @@
-import Image from "next/image";
-import playerImage from "@/public/images/breakfast2.jpg";
 import { baseUrl } from "@/lib/configs";
 import MatchToday from "./MatchToday";
-import { GetFixtures } from "../fixtures/page";
+import { GetFixtures } from "../matches/page";
+ 
 export const GetMatchResults = async () => {
   const response = await fetch(baseUrl() + "/api/match-results", {
     cache: "no-store",
@@ -16,9 +15,10 @@ export default async function AdminResults() {
   return (
     <section className="pb-5">
       <div className="flex gap-2 justify-between ">
-        <Image src={playerImage} width={300} height={300} alt="desc image" />
         <h1 className="__h2">Results and fixtures log</h1>
       </div>
+
+  
 
       <h1 className="__h1 bg-[#000000b2] text-white"> Results & Fixtures</h1>
       <br />
