@@ -3,25 +3,219 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --primary-red: rgb(255, 107, 107);
+  --primary-green: #007854;
+  --primary-blue: blue;
+  --deep-blue: #082465;
+  --arsh: #ddd9d9;
+  --arsh-trans: #ded7d7c9;
+  --modal-overlay: rgba(0, 0, 0, 0.566);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* dedicated */
+  --home: #f1f9ff;
+  --home-lite: #f5f9fd;
+  --players: #9bb0a3;
+  --players-lite: #9bb0a3ca;
+  --sponsors: #4b4b4b;
+  --sponsors-lite: #4b4b4bbd;
+  --fixtures: #b09a9a;
+  --fixtures-lite: #b09a9aba;
+  --results: #000333;
+  --results-lite: #000333d2;
+  --contact: #f88c27;
+  --contact-lite: #f88c27d3;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  /* font-family: "Segoe UI", Tahoma, sans-serif, Arial, Helvetica; */
+  font-family: "Euclid Circular A", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  @apply dark:bg-white dark:text-black;
+  background-image: url("../assets/images/bg/body-bg.jpg");
+}
+body {
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Link */
+.simple__link {
+  @apply font-thin text-sm visited:text-purple-950 hover:underline underline-offset-2 transition-all text-gray-500 hover:text-gray-700 active:text-gray-950;
+}
+.free__link {
+  @apply text-sm visited:text-purple-950 hover:underline underline-offset-2 transition-all;
+}
+.primary__link {
+  @apply text-gray-800  hover:text-gray-700 font-mono font-thin bg-slate-100 hover:font-semibold active:bg-slate-300 px-2 py-1;
+}
+.secondary__link {
+  @apply text-gray-950 hover:text-gray-800 border font-sans hover:bg-slate-100 hover:rounded-md px-2 py-1 disabled:bg-slate-200 disabled:text-green-800;
+}
+
+/* Scrollbar */
+._hideScrollbar::-webkit-scrollbar {
+  width: none;
+  display: none;
+  background-color: #f5f5f5; /* For Chrome, Safari, and Opera */
+}
+._hideScrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/*FORM CLASSICs  */
+/* dark:text-white dark:border-gray-600 dark:focus:border-blue-500 */
+.classic__form-input {
+  @apply block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600;
+}
+
+/* dark:text-gray-400 peer-focus:dark:text-blue-500 */
+.classic__form-label {
+  @apply peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8;
+}
+.form__btn {
+  @apply transition-all duration-500 ease-linear text-white hover:text-gray-200 font-bold py-2 px-8 justify-center w-fit rounded disabled:bg-gray-500 disabled:hover:bg-gray-500 disabled:text-inherit disabled:cursor-default cursor-pointer;
+}
+.classic__clear-btn {
+  @apply border border-hidden w-[100px] rounded text-red-400 hover:text-red-500 hover:bg-red-50 active:text-red-600;
+}
+
+/* Searchbar */
+.basic_searchbar {
+  @apply px-2 py-1 h-8 bg-white shadow rounded border-0 border-b-[3px] border-green-200 focus-within:border-green-600;
+}
+.classic__searchbar {
+  @apply shadow border-0 border-b-[3px] border-green-200 focus-within:border-green-500;
+}
+
+/*  Basic input*/
+.basic__select,
+.basic__input {
+  @apply p-1 border placeholder:text-gray-500 dark:text-white active:outline outline-primaryGreen;
+}
+.basic__textarea {
+  @apply p-2  border placeholder:text-gray-800 dark:text-white active:outline outline-primaryGreen w-full max-h-[170px];
+}
+
+/*OTHER Classics */
+.classic__input {
+  @apply text-lg py-2 px-1 border-none active:outline outline-[#57ff57] rounded;
+}
+.classic__select {
+  @apply text-lg py-2 px-1 border-none placeholder:text-gray-800 text-black active:outline outline-primaryGreen rounded;
+}
+
+/* Buttons */
+.default__btn {
+  @apply text-white bg-[#303030] hover:bg-[#2f2e2ee1] active:bg-[#1c1c1c] transition-all;
+}
+.primary__btn {
+  @apply bg-primaryGreen text-white hover:bg-[#007854e9] active:bg-[#13674e] disabled:bg-gray-400 disabled:hover:bg-gray-400 rounded transform duration-200;
+}
+.secondary__btn {
+  @apply shadow bg-[#eeeeee] hover:bg-[#e7e7e7] active:bg-[#cecece] transition-all text-primaryGreen disabled:bg-slate-100 disabled:hover:bg-slate-100 border border-primaryGreen;
+}
+.reset__btn {
+  @apply border border-hidden rounded text-white bg-red-400 hover:bg-red-300 hover:text-white active:text-red-600;
+}
+.delete__btn {
+  @apply text-[#ec503f] hover:text-white bg-white hover:bg-[#ed5e4e] active:bg-[#f55746] border border-red-600 transition-all duration-200 disabled:bg-red-100 disabled:hover:bg-red-100 disabled:text-red-400;
+}
+.remove__btn {
+  @apply text-[#ec533fdf] hover:text-[#ec4646] active:text-[#fd586e] transition-all duration-200 disabled:bg-red-100 disabled:text-red-400;
+}
+
+.__h1 {
+  @apply text-center text-4xl font-bold;
+}
+
+.__h2 {
+  @apply my-2 text-2xl font-semibold;
+}
+
+.td_input {
+  @apply text-black font-semibold px-2;
+}
+
+/* Staff page*/
+.staff__card-container {
+  @apply grid gap-1 p-1;
+}
+.staff__card {
+  @apply flex h-14 rounded hover:bg-slate-300;
+}
+.ul Link {
+  @apply rounded py-[7px] px-[13px] hover:bg-slate-300 transition-all duration-300;
+}
+
+/* KEYFrames */
+.loading-icon {
+  animation: animate 3s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+.spin-logo {
+  animation: animate 10s infinite;
+}
+
+/* WAVING OBJECT */
+@keyframes waver {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+.__waving {
+  animation: animate 15s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+/* Naturals */
+
+.feel__natural {
+  @apply bg-[#efefef] hover:bg-[#cacdd1] active:bg-green-50 p-1 disabled:border disabled:bg-transparent;
+}
+.feel__smooth {
+  @apply bg-slate-100 hover:bg-gray-100 active:bg-green-100 p-1 disabled:border disabled:bg-transparent;
+}
+
+/* Gradient */
+
+.__gradient1 {
+  @apply bg-gradient-to-tr from-blue-500 to-blue-300;
+}
+.__gradient2 {
+  @apply bg-gradient-to-tr from-yellow-500 to-red-800;
+}
+
+/* background images */
+.blue-bg1 {
+  background-image: url(../assets/images/bg/blue-bg1.png);
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.blue-bg2 {
+  background-image: url(../assets/images/bg/blue-bg2.png);
+  background-position: bottom;
+  background-size: auto;
+  background-repeat: no-repeat;
+}
+.blue-bg3 {
+  background-image: url(../assets/images/bg/blue-bg3.png);
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
