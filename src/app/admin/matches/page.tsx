@@ -1,6 +1,6 @@
 import { baseUrl } from "@/lib/configs";
-import AddNewFixture, { DisplayFixtures } from "./Fixture";
-import CreateMatch from "./CreateMatch";
+import { DisplayFixtures } from "./DisplayFixtures";
+import CreateMatch from "./CreateFixture";
 export const GetFixtures = async () => {
   const response = await fetch(baseUrl() + "/api/fixtures", {
     cache: "no-store",
@@ -18,10 +18,14 @@ export default async function AdminFixtures() {
         <li>
           <CreateMatch />
         </li>
+
+        <li>
+          <DisplayFixtures fixtures={fixtures} />
+        </li>
       </ul>
-      
-      <AddNewFixture />
-      <DisplayFixtures fixtures={fixtures} />
     </section>
   );
 }
+
+
+

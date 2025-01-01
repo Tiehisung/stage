@@ -1,3 +1,6 @@
+import { IMatchProps } from "@/components/fixturesAndResults";
+import { teamKFC } from "@/data/teams";
+
 export function getErrorMessage(
   error: unknown,
   customMessage?: string
@@ -17,3 +20,8 @@ export function getErrorMessage(
   return customMessage ?? "Error occurred!";
 }
 export const getFilePath = (file: File) => URL.createObjectURL(file);
+
+export const getTeams = (match: IMatchProps) => ({
+  home: match?.isHome ? teamKFC : match?.oponent,
+  away: match?.isHome ? match?.oponent : teamKFC,
+});

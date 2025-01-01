@@ -19,6 +19,7 @@ import { FaNewspaper } from "react-icons/fa";
 import { FcManager } from "react-icons/fc";
 import { useSession } from "next-auth/react";
 import { ReactNode } from "react";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -50,7 +51,19 @@ export function LeftPane() {
       className={`max-md:hidden bg-[#faf9f9] w-[220px] h-[90vh] overflow-y-auto`}
     >
       <ul className="grid gap-3 h-fit text-blue-500 ">
-        <Link href={"/admin/matches"}>
+        <Link href={"/admin/features"}>
+          <li
+            className={`px-1 flex items-center gap-2 h-10  text-sm ${
+              activeLink("/admin/features")
+                ? "bg-blue-300 hover:bg-blue-300 text-white"
+                : "hover:bg-slate-100"
+            }`}
+          >
+            <MdOutlineFeaturedPlayList className="text-3xl " />
+            Features
+          </li>
+        </Link>
+        <Link href={"/admin/features"}>
           <li
             className={`px-1 flex items-center gap-2 h-10  text-sm ${
               activeLink("/admin/matches")
@@ -189,6 +202,22 @@ export function LeftPaneMobile({
         className="w-52 h-full bg-white text-blue-500 overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
+        <Link
+          onClick={() => setIsOpen((p) => !p)}
+          className="h-10 border "
+          href={"/admin/features"}
+        >
+          <li
+            className={`px-1 w-full h-10  flex gap-2 items-center  ${
+              activeLink("/admin/features")
+                ? "bg-blue-300 hover:bg-blue-300 text-white"
+                : "hover:bg-slate-100"
+            }`}
+          >
+            <MdOutlineFeaturedPlayList className="text-3xl " />
+            Features
+          </li>
+        </Link>
         <Link
           onClick={() => setIsOpen((p) => !p)}
           className="h-10 border "

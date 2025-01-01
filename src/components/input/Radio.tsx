@@ -3,19 +3,21 @@
 import React, { FC, useEffect, useState } from "react";
 
 interface RadioButtonsProps {
-  values: string[] | number[];
+  values: string[];
+  defaultValue: string;
   wrapperStyles?: string;
   className?: string;
-  setSelectedValue?: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const RadioButtons: FC<RadioButtonsProps> = ({
   values,
+  defaultValue,
   wrapperStyles,
   className,
   setSelectedValue,
 }) => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
   useEffect(() => {
     if (typeof setSelectedValue !== "undefined") {
       setSelectedValue(selectedOption);

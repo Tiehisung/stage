@@ -18,6 +18,7 @@ const TabbedComponents = ({
   className,
   tabButtonStyles,
   footer,
+  queryName = "tab", //Name to lookup for in the searchParams
 }: {
   labels: string[];
   children: ReactNode[];
@@ -25,18 +26,19 @@ const TabbedComponents = ({
   className?: string;
   tabButtonStyles?: string;
   footer?: ReactNode;
+  queryName?: string;
 }) => {
   const router = useRouter();
   const sp = useSearchParams();
   const [tabIndex, setTabIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const tab = sp?.get("tab");
+    const tab = sp?.get(queryName);
     if (tab) setTabIndex(Number(tab));
   }, [sp]);
 
   const handleSetTab = (index: number) => {
-    setSearchParams("tab", String(index), router);
+    setSearchParams(queryName, String(index), router);
   };
   return (
     <div className="grid">
@@ -47,13 +49,13 @@ const TabbedComponents = ({
             className={`grow pt-2 pb-1 px-2 capitalize relative slowTrans whitespace-nowrap ${
               tabIndex == index
                 ? "bg-white cursor-default pointer-events-none text-teal-700 "
-                : " text-Black hover:bg-gray-300/40"
+                : " text-black hover:bg-gray-300/40"
             } ${tabButtonStyles}`}
             onClick={() => handleSetTab(index)}
           >
             {label}
             <div
-              className={` bg-gradient-to-r from-Teal/35 via-Teal to-teal-700/40 absolute left-0 h-1 ${
+              className={` bg-gradient-to-r from-teal-300/35 via-teal-500 to-teal-700/40 absolute left-0 h-1 ${
                 tabIndex == index
                   ? "bottom-0 right-0 text-Teal transition-all duration-200 ease-linear "
                   : "invisible right-full"
@@ -89,7 +91,7 @@ export const LinkTabs = ({
   const isActive = (path: string) => pathname == path;
   return (
     <div
-      className={`flex justify-center bg- mb-4 font-light items-center ${wrapperStyles}`}
+      className={`flex justify-center mb-4 font-light items-center ${wrapperStyles}`}
     >
       {tabs.map((tab, i) => (
         <Link

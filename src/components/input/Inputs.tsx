@@ -8,7 +8,7 @@ import {
 } from "react";
 import { BiPhone } from "react-icons/bi";
 import { CiText } from "react-icons/ci";
-import { IoIosLink } from "react-icons/io";
+import { IoIosLink, IoMdTime } from "react-icons/io";
 import { MdAlternateEmail, MdDateRange, MdNumbers } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 
@@ -19,6 +19,7 @@ const inputIcons = [
   { type: "number", icon: <MdNumbers /> },
   { type: "tel", icon: <BiPhone /> },
   { type: "date", icon: <MdDateRange /> },
+  { type: "time", icon: <IoMdTime /> },
   { type: "url", icon: <IoIosLink /> },
 ];
 
