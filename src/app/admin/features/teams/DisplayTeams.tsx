@@ -2,10 +2,11 @@ import { ITeamProps } from "@/components/fixturesAndResults";
 import { PopperToLeft } from "@/components/Poppers";
 import React from "react";
 
-const DisplayTeams = () => {
-  const teams: ITeamProps[] = [];
+const DisplayTeams = ({teams}:{teams:ITeamProps[]}) => {
+ 
   return (
     <li>
+      <h1 className="_label">Teams</h1>
       <table className="table ">
         <tbody>
           <tr>

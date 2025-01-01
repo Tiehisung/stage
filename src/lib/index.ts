@@ -21,6 +21,14 @@ export function getErrorMessage(
 }
 export const getFilePath = (file: File) => URL.createObjectURL(file);
 
+export const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
 export const getTeams = (match: IMatchProps) => ({
   home: match?.isHome ? teamKFC : match?.oponent,
   away: match?.isHome ? match?.oponent : teamKFC,

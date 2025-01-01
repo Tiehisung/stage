@@ -96,7 +96,7 @@ interface IInputProps extends IInput {
 }
 
 export function Input({
-  className = " bg-liteBlue/10",
+  className = " bg-lightGray/10",
   name,
   label = "",
   labelStyles = "",
@@ -120,7 +120,7 @@ export function Input({
         htmlFor={name}
         className={`absolute transition-all duration-200 ease-linear delay-0 select-none ${
           isFocus
-            ? "-top-5 text-sm font-semibold " + labelStylesFocus
+            ? `-top-5 text-sm font-semibold ${labelStylesFocus}`
             : "ml-1 pl-4 top-1/4 text-gray-600"
         } ${labelStyles}`}
       >
@@ -139,7 +139,7 @@ export function Input({
             ? placeholder.substring(0, 27) + "..."
             : placeholder
         }
-        className={`outline-none border border-gray-300 focus:border-Blue shadow-Blue/50 h-9 rounded px-2 text-primary w-full placeholder:line-clamp-1 slowTrans ${className}`}
+        className={`outline-none border border-gray-300 focus:border-blue-400 shadow-blue-100/50 h-9 rounded px-2 text-primary w-full placeholder:line-clamp-1 slowTrans ${className}`}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(value ? true : false)}
         {...others}

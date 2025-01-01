@@ -8,6 +8,7 @@ import RTKStoreProvider from "@/providers/RtkProvider";
 import FooterCP from "@/components/foooter/FooterCp";
 
 import { ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <FooterCP />
           </AuthProvider>
         </RTKStoreProvider>
+        <ToastContainer />
       </body>
     </html>
   );

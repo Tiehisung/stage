@@ -4,12 +4,26 @@ import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
 import SingleFilePicker from "@/components/files/SingleFilePicker";
 import { ITeamProps } from "@/components/fixturesAndResults";
 import { IconInput } from "@/components/input/Inputs";
-import { getFilePath } from "@/lib";
-import { baseUrl } from "@/lib/configs";
+import { apiConfig } from "@/lib/configs";
+import { TConvertedFile } from "@/types/file";
+import { IFileUpload } from "@/types/interface";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
+
+export interface IPostTeam {
+  name: string;
+  community: string;
+  alias: string;
+  logo: IFileUpload;
+  currentPlayers: string[];
+}
+
+export interface IUpdateTeam extends IPostTeam{
+  _id: string;
+
+}
 
 export const NewTeamForm = () => {
   const router = useRouter();
@@ -20,27 +34,29 @@ export const NewTeamForm = () => {
     community: "",
     alias: "",
   });
-  const [logoFile, setLogoFile] = useState<File | null | undefined>(null);
+  const [logoFile, setLogoFile] = useState<TConvertedFile | null >(null);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((p) => ({ ...p, [name]: value }));
   };
 
+ 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWaiting(true);
     const body = {
       ...formData,
-      logoPath: getFilePath(logoFile as File),
+      logo:  logoFile //IFileUpload
     };
-    const response = await fetch(baseUrl() + "/api/teams", {
+    const response = await fetch(apiConfig.teams, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
       cache: "no-cache",
     });
     const results = await response.json();
+    console.log({ results });
     toast(results.message, { type: results.success ? "success" : "error" });
     setWaiting(false);
     // if (results.success) {
@@ -48,14 +64,20 @@ export const NewTeamForm = () => {
     router.refresh();
   };
   return (
-    <li>
-      <form className="" onSubmit={handleSubmit}>
+    <li className="px-6">
+      <form
+        className="p-4 border rounded-xl space-y-5 container bg-slate-100"
+        onSubmit={handleSubmit}
+      >
         <IconInput
           name="name"
           type="text"
           className=""
           value={formData.name}
           onChange={handleOnChange}
+          placeholder="Name"
+          label="Name"
+          required
         />
         <IconInput
           name="alias"
@@ -63,6 +85,8 @@ export const NewTeamForm = () => {
           className=""
           value={formData.alias}
           onChange={handleOnChange}
+          placeholder="Alias"
+          required
         />
         <IconInput
           name="community"
@@ -70,9 +94,14 @@ export const NewTeamForm = () => {
           className=""
           value={formData.community}
           onChange={handleOnChange}
+          placeholder="Community"
+          required
         />
 
-        <SingleFilePicker pickerId="team-logo" exportFile={setLogoFile} />
+        <div>
+          <p>Team logo</p>
+          <SingleFilePicker pickerId="team-logo" exportFile={setLogoFile} />
+        </div>
         <div>
           <FormSubmitBtn
             waiting={waiting}
@@ -95,7 +124,7 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
     community: team.community ?? "",
     alias: team.alias ?? "",
   });
-  const [logoFile, setLogoFile] = useState<File | null | undefined>(null);
+  const [logoFile, setLogoFile] = useState<TConvertedFile | null >(null);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -108,9 +137,9 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
     const body = {
       ...team,
       ...formData,
-      logoPath: getFilePath(logoFile as File),
+      logo:logoFile,
     };
-    const response = await fetch(baseUrl() + "/api/teams", {
+    const response = await fetch(apiConfig.teams, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

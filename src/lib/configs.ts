@@ -52,3 +52,11 @@ export async function uploadSingleFile({
   const uploadRsp = await upload.json();
   return uploadRsp; //{data,success,message}
 }
+
+export const apiConfig = {
+  sponsor: baseUrl() + "/api/sponsor",
+  teams: baseUrl() + "/api/teams",
+  //File
+  file: baseUrl() + "/api/file", //Interacts with db
+  fileUpload: baseUrl() + "/api/file/cloudinary", //Interacts with storage(cld)
+};

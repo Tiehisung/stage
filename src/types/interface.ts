@@ -21,16 +21,19 @@ export interface IFileProps {
   updatedAt?: string;
 }
 
+
 export interface IFileUpload {
   name: string;
   path: string;
   type?: string;
-  preset?: string;
-  folder?: string;
+  preset?: TPreset;
+  folder?: string; //eg. logos, images, videos, audios/qiraa
   presetType?: TPresetType;
   description?: string;
 }
 //Cloudinary
 
 export type TPresetType = "authenticated" | "unauthenticated";
-export type TPreset = "konjiehifc-preset";
+export type TPreset = "konjiehifc";
+export type TResourceType = "image" | "video" | "audio" | "auto";
+// export type TFolders = "images/logos" | "images" | "videos" | "audios";

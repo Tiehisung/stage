@@ -75,36 +75,76 @@ const TabbedComponents = ({
 
 export default TabbedComponents;
 
+// Links and button tabs for page navigation
 interface ILinkTabProps {
   tabs: { path: string; label: ReactNode }[];
   replace?: boolean;
   wrapperStyles?: string;
   className?: string;
+  allowLinks?: boolean;
 }
 export const LinkTabs = ({
   tabs,
   replace = true,
   wrapperStyles,
   className = "",
+  allowLinks = false,
 }: ILinkTabProps) => {
+  const router = useRouter();
   const pathname = usePathname();
   const isActive = (path: string) => pathname == path;
+
+  const handleNavigate = (path: string) => {
+    if (replace) {
+      router.replace(path);
+    } else {
+      router.push(path);
+    }
+  };
+  if (allowLinks)
+    return (
+      <div
+        className={`flex justify-center mb-4 font-light items-center ${wrapperStyles}`}
+      >
+        {tabs.map((tab, i) => (
+          <Link
+            replace={replace}
+            key={i}
+            href={tab.path}
+            className={` py-1 px-2 text-black capitalize ${
+              isActive(tab.path) ? "bg-white cursor-default" : ""
+            } ${className}`}
+          >
+            {tab.label}
+          </Link>
+        ))}
+      </div>
+    );
+
   return (
-    <div
-      className={`flex justify-center mb-4 font-light items-center ${wrapperStyles}`}
-    >
-      {tabs.map((tab, i) => (
-        <Link
-          replace={replace}
-          key={i}
-          href={tab.path}
-          className={` py-1 px-2 text-black capitalize ${
-            isActive(tab.path) ? "bg-white cursor-default" : ""
-          } ${className}`}
-        >
-          {tab.label}
-        </Link>
-      ))}
+    <div className="grid">
+      <div className={`flex mb-4 font-light items-center ${wrapperStyles}`}>
+        {tabs.map(({ label, path }, index) => (
+          <button
+            key={index}
+            className={`grow pt-2 pb-1 px-2 capitalize relative slowTrans whitespace-nowrap ${
+              isActive(path)
+                ? "bg-white cursor-default pointer-events-none text-teal-700 "
+                : " text-black hover:bg-gray-300/40"
+            } ${className}`}
+            onClick={() => handleNavigate(path)}
+          >
+            {label}
+            <div
+              className={` bg-gradient-to-r from-teal-300/35 via-teal-500 to-teal-700/40 absolute left-0 h-1 ${
+                isActive(path)
+                  ? "bottom-0 right-0 text-Teal transition-all duration-200 ease-linear "
+                  : "invisible right-full"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

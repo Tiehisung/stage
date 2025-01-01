@@ -7,6 +7,7 @@ const teamSchema = new Schema(
     community: { type: String },
     logo: {},
     isHome: Boolean,
+    currentPlayers: [{ type: Schema.Types.ObjectId, ref: "players" }],
   },
   { timestamps: true }
 );
