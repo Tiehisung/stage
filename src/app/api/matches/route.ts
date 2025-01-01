@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
   if (saved) return NextResponse.json({ message: "Success", success: true });
   return NextResponse.json({ message: "Not saved", success: false });
 }
+
 export async function PUT(request: NextRequest) {
   const { date, host, visitors, _id } = await request.json();
   console.log(" date, host, visitors, _id", date, host, visitors, _id);
