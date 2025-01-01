@@ -17,7 +17,7 @@ export interface IMatchProps {
   title: string;
   date: string;
   time: string;
-  oponent: ITeamProps;
+  opponent: ITeamProps;
   broadcaster?: IFileProps;
   status: MatchStatus;
   scores: { kfc: IGoal[]; oponent: IGoal[] };

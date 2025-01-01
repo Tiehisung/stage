@@ -7,24 +7,17 @@ import { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { UpdateFixtureMatch } from "./CreateFixture";
-import { IMatchProps } from "@/components/fixturesAndResults";
-import { teamKFC } from "@/data/teams";
+import { IMatchProps, ITeamProps } from "@/components/fixturesAndResults";
 import { getTeams } from "@/lib";
-
-interface Fixture {
-  _id: string;
-  host: string;
-  visitors: string;
-  date: string;
-}
 
 interface DisplayFixturesProps {
   fixtures: IMatchProps[];
+  teams:ITeamProps[]
 }
 // Fixture is  match that is not yet played successfully
 
-export function DisplayFixtures({ fixtures }: DisplayFixturesProps) {
-  const [fixtureToEdit, setFixtureToEdit] = useState<Fixture | null>(null);
+export function DisplayFixtures({ fixtures,teams }: DisplayFixturesProps) {
+  const [fixtureToEdit, setFixtureToEdit] = useState<IMatchProps | null>(null);
 
   return (
     <div>
@@ -47,7 +40,7 @@ export function DisplayFixtures({ fixtures }: DisplayFixturesProps) {
               </td>
               <td className="px-2 py-2">{fixture.date}</td>
               <td className="px-2 py-2 flex gap-5 text-sm ">
-                <UpdateFixtureMatch fixture={fixtureToEdit as unknown as IMatchProps} />
+                <UpdateFixtureMatch teams={teams} fixture={fixtureToEdit as unknown as IMatchProps} />
                 <DeleteFixture fixtureId={fixture._id} />
               </td>
             </tr>

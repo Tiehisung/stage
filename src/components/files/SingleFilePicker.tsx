@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FcMultipleCameras } from "react-icons/fc";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "../buttons/SubmitAndClick";
-import { fileToBase64, getErrorMessage, getFilePath } from "@/lib";
+import { fileToBase64, getErrorMessage,   } from "@/lib";
 import { TConvertedFile } from "@/types/file";
 import { toast } from "react-toastify";
 
@@ -52,7 +52,7 @@ export default function SingleFilePicker({
     exportFile(convertedFile);
   }, [convertedFile]);
   return (
-    <div className={`py-4 bg-secondaryGrey border p-4 ${className}`}>
+    <div className={`py-4 border p-4 ${className}`}>
       <section className="flex flex-wrap items-center gap-8 justify-between w-full">
         <label
           data-tip="Choose file"

@@ -27,10 +27,10 @@ export function DeleteTeam({
       const response = await fetch(`${apiConfig.teams}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        cache: "no-cache",body: JSON.stringify(team),
+        cache: "no-cache",
+        body: JSON.stringify(team),
       });
       const results = await response.json();
-      console.log({results})
       toast(results.message, { type: results.success ? "success" : "error" });
       setWaiting(false);
     } catch (error) {
@@ -49,7 +49,7 @@ export function DeleteTeam({
       handleClickEvent={handleDelete}
       className={className}
     >
-      <RiDeleteBin6Line className={waiting ? "hidden" : ""} /> 
+      <RiDeleteBin6Line className={waiting ? "hidden" : ""} />
     </Button>
   );
 }

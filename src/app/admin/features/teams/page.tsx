@@ -29,14 +29,12 @@ export const GetTeams = async (teamId?: string) => {
 const TeamsFeature = async () => {
   const teams: ITeamProps[] = await GetTeams();
   return (
-    <div>
-      <ul className="space-y-12">
+    <div className="space-y-12 p-4 md:px-10">
         {/* Create */}
         <NewTeamForm />
 
         {/* Display */}
         <DisplayTeams teams={teams} />
-      </ul>
     </div>
   );
 };

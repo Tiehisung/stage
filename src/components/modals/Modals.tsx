@@ -1,24 +1,26 @@
+'use client'
+
 import React, { ReactNode, useState } from "react";
 import DiveUpwards from "../Animate/DiveUp";
 
 const PrimaryModal = ({
   children,
-  open = false,
-  setOpen,
+  isOpen = false,
+  setIsOpen,
   className,
 }: {
   children: ReactNode;
-  open: boolean;
-  setOpen: (arg: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (arg: boolean) => void;
   className?: string;
 }) => {
-  if (!open) return null;
+  if (!isOpen) return null;
   return (
     <div
-      onClick={() => setOpen(false)}
+      onClick={() => setIsOpen(false)}
       className={` z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center ${className}`}
     >
-      <DiveUpwards>{open && children}</DiveUpwards>
+      <DiveUpwards>{isOpen && children}</DiveUpwards>
     </div>
   );
 };
@@ -50,7 +52,7 @@ export function SecondaryModal({
 
       <div
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 z-50 justify-center items-center transition-all duration-300 bg-modalTransparent p-5 overflow-y-auto ${
+        className={`fixed inset-0 z-50 justify-center items-center transition-all duration-300 bg-modalOverlay p-5 overflow-y-auto ${
           isOpen
             ? "flex scale-100"
             : "invisible -top-[100%] scale-y-95 rounded-badge"

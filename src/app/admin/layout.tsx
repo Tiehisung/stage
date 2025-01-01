@@ -24,7 +24,6 @@ import { MdOutlineFeaturedPlayList } from "react-icons/md";
 export default function Layout({ children }: { children: ReactNode }) {
   const [openSidebar, setOpenSidebar] = useState(false);
   const { data: session, status } = useSession({ required: true });
-  console.log({ session, status });
   return (
     <main className="md:flex relative">
       <LeftPane />
@@ -37,7 +36,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <TbChevronCompactRight />
       </button>
 
-      <section className="flex-1 h-[90vh] overflow-y-auto">{children}</section>
+      <section className="flex-1 h-screen overflow-y-auto bg-background">{children}</section>
     </main>
   );
 }
@@ -48,7 +47,7 @@ export function LeftPane() {
     pathname.startsWith(linkname) ? true : false;
   return (
     <div
-      className={`max-md:hidden bg-[#faf9f9] w-[220px] h-[90vh] overflow-y-auto`}
+      className={`max-md:hidden bg-[#faf9f9] w-[220px] max-h-screen overflow-y-auto`}
     >
       <ul className="grid gap-3 h-fit text-blue-500 ">
         <Link href={"/admin/features"}>
@@ -63,7 +62,7 @@ export function LeftPane() {
             Features
           </li>
         </Link>
-        <Link href={"/admin/features"}>
+        <Link href={"/admin/matches"}>
           <li
             className={`px-1 flex items-center gap-2 h-10  text-sm ${
               activeLink("/admin/matches")

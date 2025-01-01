@@ -14,7 +14,7 @@ const fileSchema = new mongoose.Schema(
   { timestamps: true } 
 );
 
-const FileModel = mongoose.models.File || mongoose.model("File", fileSchema);
+const FileModel = mongoose.models.files || mongoose.model("files", fileSchema);
 
 export default FileModel;
 

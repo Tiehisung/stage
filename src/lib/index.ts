@@ -30,6 +30,26 @@ export const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 export const getTeams = (match: IMatchProps) => ({
-  home: match?.isHome ? teamKFC : match?.oponent,
-  away: match?.isHome ? match?.oponent : teamKFC,
+  home: match?.isHome ? teamKFC : match?.opponent,
+  away: match?.isHome ? match?.opponent : teamKFC,
 });
+
+
+//
+export type AnyObject = { [key: string]: unknown };
+export function removeEmptyKeys(obj: AnyObject): AnyObject {
+  return Object.keys(obj).reduce((acc: AnyObject, key: string) => {
+    if (obj[key] !== null && obj[key] !== undefined && obj[key] !== "") {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {});
+}
+
+export const deleteEmptyKeys = (obj: AnyObject): AnyObject => {
+  Object.keys(obj).forEach((key) => {
+    if (typeof obj[key] === "undefined" || obj[key] === null || obj[key] === "")
+      delete obj[key];
+  });
+  return obj;
+};

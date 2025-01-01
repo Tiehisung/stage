@@ -215,7 +215,7 @@ export function IconInput({
 }: IInputProps) {
   return (
     <label
-      className={`input input-bordered border-mediumGrey focus-within:outline-liteBlue flex items-center gap-2 bg-gray-50 ${wrapperStyles}`}
+      className={`input input-bordered border-mediumGrey focus-within:outline-liteBlue flex items-center gap-2 bg-gray-50 overflow-x-hidden pr-2 ${wrapperStyles}`}
       title={dataTip}
       htmlFor={name}
     >

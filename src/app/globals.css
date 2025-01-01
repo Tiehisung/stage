@@ -8,6 +8,7 @@
   --primary-blue: blue;
   --deep-blue: #082465;
   --arsh: #ddd9d9;
+  --background: #edeef3;
   --arsh-trans: #ded7d7c9;
   --modal-overlay: rgba(0, 0, 0, 0.566);
 
@@ -24,6 +25,8 @@
   --results-lite: #000333d2;
   --contact: #f88c27;
   --contact-lite: #f88c27d3;
+  --admin-background: #edeef3;
+  --test: #edeef3;
 }
 
 body {

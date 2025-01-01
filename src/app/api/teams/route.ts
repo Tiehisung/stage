@@ -1,3 +1,4 @@
+import "@/models/file";
 import {
   IPostTeam,
   IUpdateTeam,
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
     //Save team to database
     const createdTeam = await TeamModel.create({
       ...team,
-      logo: uploadedImage.data,
+      logo: uploadedImage.data._id,
     });
     if (createdTeam) {
       return NextResponse.json({
@@ -84,7 +85,7 @@ export async function PUT(request: NextRequest) {
       }
       const updated = await TeamModel.updateOne(
         { _id: team._id },
-        { ...team, logo: uploadedImage.data }
+        { ...team, logo: uploadedImage.data?._id }
       );
       if (updated.acknowledged) {
         return NextResponse.json({
@@ -113,17 +114,20 @@ export async function PUT(request: NextRequest) {
 //Get teams
 export async function GET() {
   try {
-    const teams: ITeamProps[] = await TeamModel.find({});
+    const teams = await TeamModel.find({}).populate({ path: "logo" }).sort({
+      createdAt: "descending",
+    });
     return NextResponse.json({
       message: "Teams retrieved successfully",
       success: true,
       data: teams,
     });
   } catch (error) {
+    console.log({ error });
     return NextResponse.json({
       message: "Failed to retrieve teams",
       success: false,
-      data: error,
+      data: [],
     });
   }
 }
@@ -142,8 +146,8 @@ export async function DELETE(req: NextRequest) {
 
     //Delete team from database
     const deleted = await TeamModel.findByIdAndDelete(team._id);
-    console.log({ deleted });
-    if (deleted.acknowledged) {
+
+    if (deleted) {
       return NextResponse.json({
         message: "Team deleted successfully",
         success: true,

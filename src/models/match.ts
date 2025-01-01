@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const matchSchema = new Schema(
   {
-    oponent: { type: Schema.Types.ObjectId, ref: "teams", required: true },
+    opponent: { type: Schema.Types.ObjectId, ref: "teams", required: true },
     date: { type: String, required: true },
     time: { type: String, required: true },
     title: { type: String },

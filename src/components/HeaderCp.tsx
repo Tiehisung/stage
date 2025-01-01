@@ -16,13 +16,13 @@ export default function HeaderCp() {
   const pathname=usePathname()
   if(pathname.startsWith('/admin'))return 
   return (
-    <div className="fixed left-0 right-0 top-0 flex justify-between items-center border-hidden w-full h-[8vh] md:h-[10vh] p-4  bg-gradient-to-b from-blue-400 to-blue-600 shadow-sm shadow-stone-500  z-40">
+    <div className="sticky top-0 flex justify-between items-center border-hidden w-full px-4 blue-600 shadow-sm shadow-stone-500 z-40">
       <button className="spin-logo">
         <GiSoccerBall size={55} />
       </button>
 
-      <h1 className="flex text-yellow-200 font-semibold text-2xl md:text-3xl lg:text-5xl ">
-        <span className="text-white">Konjiehi</span> FC
+      <h1 className="flex text-yellow-200 font-likght text-xl md:text-2xl lg:text-3xl ">
+        <span className="text-gray-600">Konjiehi</span> FC
       </h1>
 
       <NavBar />
@@ -113,7 +113,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
               onClick={() => setIsOpen(false)}
             >
               <Link href={"/"} className="flex gap-1 w-full items-center">
-                <BiHome className="p-2 w-12 h-12" />
+                <BiHome className="p-2 w-12 " />
                 Home
               </Link>
             </li>
@@ -126,7 +126,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
               href={"/contact-us"}
               className="flex gap-1 w-full items-center"
             >
-              <BiMailSend className="p-2 w-12 h-12" />
+              <BiMailSend className="p-2 w-12 " />
               Contact us
             </Link>
           </li>
@@ -138,7 +138,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
               href={"/sponsorship"}
               className="flex gap-1 w-full items-center"
             >
-              <RiFundsFill className="p-2 w-12 h-12" />
+              <RiFundsFill className="p-2 w-12 " />
               Sponsors
             </Link>
           </li>
@@ -147,7 +147,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
             onClick={() => setIsOpen(false)}
           >
             <Link href={"/fixtures"} className="flex gap-1 w-full items-center">
-              <TbTableRow className="p-2 w-12 h-12" />
+              <TbTableRow className="p-2 w-12 " />
               fixtures
             </Link>
           </li>
@@ -159,7 +159,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
               href={"/match-results"}
               className="flex gap-1 w-full items-center"
             >
-              <BiTable className="p-2 w-12 h-12" />
+              <BiTable className="p-2 w-12 " />
               Match results
             </Link>
           </li>
@@ -168,7 +168,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
             onClick={() => setIsOpen(false)}
           >
             <Link href={"/players"} className="flex gap-1 w-full items-center">
-              <BsStarFill className="p-2 w-12 h-12" />
+              <BsStarFill className="p-2 w-12 " />
               Players
             </Link>
           </li>
@@ -178,7 +178,7 @@ export function MobilieNavCp({  }: MobilieNavCpProps) {
             onClick={() => setIsOpen(false)}
           >
             <Link href={"/admin"} className="flex gap-1 w-full items-center">
-              <RiAdminLine className="p-2 w-12 h-12" /> Admin
+              <RiAdminLine className="p-2 w-12 " /> Admin
             </Link>
           </li>
         </ul>

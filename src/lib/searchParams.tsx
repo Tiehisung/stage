@@ -1,6 +1,7 @@
 "use client";
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { AnyObject, removeEmptyKeys } from ".";
 
 /**
  * Adds a searchparams and returns new pathname containing the searchParams with it's value
@@ -72,13 +73,5 @@ export const setMultiSearchParams = (
   else router.push(newPathname);
 };
 
-type AnyObject = { [key: string]: unknown };
 
-export function removeEmptyKeys(obj: AnyObject): AnyObject {
-  return Object.keys(obj).reduce((acc: AnyObject, key: string) => {
-    if (obj[key] !== null && obj[key] !== undefined && obj[key] !== "") {
-      acc[key] = obj[key];
-    }
-    return acc;
-  }, {});
-}
+

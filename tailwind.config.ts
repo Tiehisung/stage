@@ -28,6 +28,9 @@ const config: Config = {
         resultsLite: "var(--results-lite)",
         contact: "var(--contact)",
         contactLite: "var(--contact-lite)",
+
+        // background gray
+        background: "#edeef3",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

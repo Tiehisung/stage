@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     //Save to database
-    await FileModel.create({
+    const savedFile = await FileModel.create({
       ...uploadResult,
       description,
       name,
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 
     //Return response
     return NextResponse.json({
-      data: { ...uploadResult, name, description },
+      data: savedFile,
       success: true,
       message: "File uploaded and saved successfully",
     });
@@ -92,20 +92,21 @@ export async function DELETE(request: NextRequest) {
     //Delete individually
 
     files.forEach(async ({ public_id, resource_type }) => {
-      await cloudinary.uploader.destroy(
-        public_id!,
-        {
-          resource_type: resource_type || "image",
-          invalidate: true,
-        },
-        (error, result) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log({deleted: result });
+      if (public_id)
+        await cloudinary.uploader.destroy(
+          public_id!,
+          {
+            resource_type: resource_type || "image",
+            invalidate: true,
+          },
+          (error, result) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log({ deleted: result });
+            }
           }
-        }
-      );
+        );
     });
 
     return new Response(
