@@ -2,6 +2,7 @@ import React from "react";
 import { NewTeamForm } from "./CreateOrUpdateTeam";
 import DisplayTeams from "./DisplayTeams";
 import { ITeamProps } from "@/components/fixturesAndResults";
+import { apiConfig } from "@/lib/configs";
 
 export const metadata = {
   title: "Teams | KFC",
@@ -9,11 +10,22 @@ export const metadata = {
 };
 
 export const GetTeams = async (teamId?: string) => {
-  return fetch(`/api/teams?teamId=${teamId ? teamId : ""}`)
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((err) => err);
+  try {
+    const response = await fetch(apiConfig.teams + `?teamId=${teamId || ""}`, {
+      cache: "no-cache",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.data; // Return parsed data if successful
+  } catch (error) {
+    console.error("Error fetching teams:", error);
+    // Return a consistent error object
+    return [];
+  }
 };
+
 const TeamsFeature = async () => {
   const teams: ITeamProps[] = await GetTeams();
   return (

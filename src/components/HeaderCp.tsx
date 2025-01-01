@@ -13,6 +13,8 @@ import { AiOutlineMenuUnfold } from "react-icons/ai";
 import HideOnClickOutside from "./HideOnClickOutside";
 
 export default function HeaderCp() {
+  const pathname=usePathname()
+  if(pathname.startsWith('/admin'))return 
   return (
     <div className="fixed left-0 right-0 top-0 flex justify-between items-center border-hidden w-full h-[8vh] md:h-[10vh] p-4  bg-gradient-to-b from-blue-400 to-blue-600 shadow-sm shadow-stone-500  z-40">
       <button className="spin-logo">

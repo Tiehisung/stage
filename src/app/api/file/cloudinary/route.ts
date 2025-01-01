@@ -40,11 +40,11 @@ export async function POST(request: NextRequest) {
         use_asset_folder_as_public_id_prefix: true,
         type: presetType || "authenticated",
       })
-      .then((result) => {
+      .then(async (result) => {
+        //Now save to database(MDB)
         return result;
       })
       .catch((err) => {
-        console.log(err, "error");
         return err;
       });
 
@@ -56,15 +56,16 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    //Now save to database(MDB)
-    const file: IFileProps = await FileModel.create({
+    //Save to database
+    await FileModel.create({
+      ...uploadResult,
       description,
       name,
-      ...uploadResult,
     });
 
+    //Return response
     return NextResponse.json({
-      data: file,
+      data: { ...uploadResult, name, description },
       success: true,
       message: "File uploaded and saved successfully",
     });
@@ -101,7 +102,7 @@ export async function DELETE(request: NextRequest) {
           if (error) {
             console.log(error);
           } else {
-            console.log({ result });
+            console.log({deleted: result });
           }
         }
       );

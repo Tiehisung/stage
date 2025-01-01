@@ -20,9 +20,8 @@ export interface IPostTeam {
   currentPlayers: string[];
 }
 
-export interface IUpdateTeam extends IPostTeam{
+export interface IUpdateTeam extends IPostTeam {
   _id: string;
-
 }
 
 export const NewTeamForm = () => {
@@ -34,20 +33,19 @@ export const NewTeamForm = () => {
     community: "",
     alias: "",
   });
-  const [logoFile, setLogoFile] = useState<TConvertedFile | null >(null);
+  const [logoFile, setLogoFile] = useState<TConvertedFile | null>(null);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((p) => ({ ...p, [name]: value }));
   };
 
- 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWaiting(true);
     const body = {
       ...formData,
-      logo:  logoFile //IFileUpload
+      logo: logoFile, //IFileUpload
     };
     const response = await fetch(apiConfig.teams, {
       method: "POST",
@@ -56,50 +54,60 @@ export const NewTeamForm = () => {
       cache: "no-cache",
     });
     const results = await response.json();
-    console.log({ results });
     toast(results.message, { type: results.success ? "success" : "error" });
     setWaiting(false);
-    // if (results.success) {
-    // }
     router.refresh();
   };
   return (
     <li className="px-6">
       <form
-        className="p-4 border rounded-xl space-y-5 container bg-slate-100"
+        className="p-4 border rounded-xl space-y-5 container bg-slate-100 max-w-md"
         onSubmit={handleSubmit}
       >
-        <IconInput
-          name="name"
-          type="text"
-          className=""
-          value={formData.name}
-          onChange={handleOnChange}
-          placeholder="Name"
-          label="Name"
-          required
-        />
-        <IconInput
-          name="alias"
-          type="text"
-          className=""
-          value={formData.alias}
-          onChange={handleOnChange}
-          placeholder="Alias"
-          required
-        />
-        <IconInput
-          name="community"
-          type="text"
-          className=""
-          value={formData.community}
-          onChange={handleOnChange}
-          placeholder="Community"
-          required
-        />
+        <div>
+          <p className="_label">Name </p>
+          <IconInput
+            name="name"
+            type="text"
+            className=""
+            value={formData.name}
+            onChange={handleOnChange}
+            placeholder="Name"
+            label="Name"
+            required
+          />
+        </div>
 
         <div>
-          <p>Team logo</p>
+          <p className="_label">Alias </p>
+          <IconInput
+            name="alias"
+            type="text"
+            className=""
+            value={formData.alias}
+            onChange={handleOnChange}
+            placeholder="Alias"
+            label="Alias"
+            required
+          />
+        </div>
+
+        <div>
+          <p className="_label">Community </p>
+          <IconInput
+            name="community"
+            type="text"
+            className=""
+            value={formData.community}
+            onChange={handleOnChange}
+            placeholder="Community"
+            label="Community"
+            required
+          />
+        </div>
+
+        <div>
+          <p className="_label">Team logo</p>
           <SingleFilePicker pickerId="team-logo" exportFile={setLogoFile} />
         </div>
         <div>
@@ -124,7 +132,7 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
     community: team.community ?? "",
     alias: team.alias ?? "",
   });
-  const [logoFile, setLogoFile] = useState<TConvertedFile | null >(null);
+  const [logoFile, setLogoFile] = useState<TConvertedFile | null>(null);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -137,7 +145,7 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
     const body = {
       ...team,
       ...formData,
-      logo:logoFile,
+      logo: logoFile,
     };
     const response = await fetch(apiConfig.teams, {
       method: "PUT",
@@ -148,8 +156,6 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
     const results = await response.json();
     toast(results.message, { type: results.success ? "success" : "error" });
     setWaiting(false);
-    // if (results.success) {
-    // }
     router.refresh();
   };
   return (
@@ -161,6 +167,8 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
           className=""
           value={formData.name}
           onChange={handleOnChange}
+          label="Name"
+          placeholder="Name"
         />
         <IconInput
           name="alias"
@@ -168,6 +176,8 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
           className=""
           value={formData.alias}
           onChange={handleOnChange}
+          label="alias"
+          placeholder="Alias"
         />
         <IconInput
           name="community"
@@ -175,6 +185,8 @@ export const UpdateTeamForm = ({ team }: { team: ITeamProps }) => {
           className=""
           value={formData.community}
           onChange={handleOnChange}
+          label="Community"
+          placeholder="Community"
         />
 
         <div>

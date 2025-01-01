@@ -58,7 +58,7 @@ export function Button({
   return (
     <button
       disabled={waiting || disabled}
-      className={` ${className} ${waiting && "cursor-wait"}`}
+      className={`flex items-center gap-2 ${className} ${waiting && "cursor-wait"}`}
       type={type}
       onClick={handleClickEvent}
       title={title}

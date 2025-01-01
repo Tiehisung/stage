@@ -23,16 +23,23 @@ const inputIcons = [
   { type: "url", icon: <IoIosLink /> },
 ];
 
+interface ITextAreaProps extends IInput {
+  type?: HTMLInputTypeAttribute;
+  labelStyles?: string;
+  labelStylesFocus?: string;
+  label?: string;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+}
 export function TextArea({
   className = "",
   name,
-  label = "",
   labelStyles = "",
   placeholder = "",
   onChange,
   value,
   dataTip = "",
   required = false,
+  label = "",
   others,
 }: ITextAreaProps) {
   const [isFocus, setIsFocus] = useState(false);
@@ -74,9 +81,6 @@ export function TextArea({
 interface IInput {
   className?: string;
   name: string;
-  label?: string;
-  labelStyles?: string;
-  labelStylesFocus?: string;
   placeholder?: string;
   value?: string | number;
   setEvent?: boolean;
@@ -85,12 +89,11 @@ interface IInput {
   required?: boolean;
   wrapperStyles?: string;
 }
-interface ITextAreaProps extends IInput {
-  type?: HTMLInputTypeAttribute;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-}
 
 interface IInputProps extends IInput {
+  labelStyles?: string;
+  labelStylesFocus?: string;
+  label?: string;
   type?: HTMLInputTypeAttribute;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -217,7 +220,7 @@ export function IconInput({
       htmlFor={name}
     >
       <span
-        className={`text-xl text-Placeholder slowTrans`}
+        className={`text-xl text-gray-700 slowTrans bg-slate-50 h-full flex items-center justify-center`}
         hidden={!inputIcons.find((item) => item.type === type)}
       >
         {inputIcons.find((item) => item.type === type)?.icon}

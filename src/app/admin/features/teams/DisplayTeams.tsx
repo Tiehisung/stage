@@ -1,9 +1,12 @@
+'use client'
+
 import { ITeamProps } from "@/components/fixturesAndResults";
 import { PopperToLeft } from "@/components/Poppers";
 import React from "react";
+import { DeleteTeam } from "./(actions)/DeleteTeam";
 
-const DisplayTeams = ({teams}:{teams:ITeamProps[]}) => {
- 
+const DisplayTeams = ({ teams }: { teams: ITeamProps[] }) => {
+
   return (
     <li>
       <h1 className="_label">Teams</h1>
@@ -17,7 +20,7 @@ const DisplayTeams = ({teams}:{teams:ITeamProps[]}) => {
             <th>Actions</th>
           </tr>
 
-          {teams.map((team, index) => (
+          {teams?.map((team: ITeamProps, index: number) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{team.name}</td>
@@ -39,11 +42,14 @@ const DisplayTeams = ({teams}:{teams:ITeamProps[]}) => {
 export default DisplayTeams;
 
 export const TeamActians = ({ team }: { team: ITeamProps }) => {
-  const className = "w-full h-5 hover:bg-gray-200 slowTrans";
+  const className =
+    "w-full py-2 px-3 hover:bg-gray-200 slowTrans select-none cursor-pointer";
   return (
     <ul>
       <li className={className}>Update</li>
-      <li className={className}>Delete</li>
+      <li  >
+        <DeleteTeam team={team} className={className}/>
+      </li>
     </ul>
   );
 };

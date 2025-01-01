@@ -4,8 +4,9 @@ import Image from "next/image";
 import { FcMultipleCameras } from "react-icons/fc";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "../buttons/SubmitAndClick";
-import { fileToBase64, getFilePath } from "@/lib";
+import { fileToBase64, getErrorMessage, getFilePath } from "@/lib";
 import { TConvertedFile } from "@/types/file";
+import { toast } from "react-toastify";
 
 export type TFilePicker = {
   fileStyles?: string;
@@ -40,9 +41,9 @@ export default function SingleFilePicker({
           name: file.name,
           type: file.type,
         });
-        console.log(base64String); // You can use the base64 string as needed
       } catch (error) {
         console.error("Error converting file to base64:", error);
+        toast.error(getErrorMessage(error, "Error converting file to base64"));
       }
     }
   };
