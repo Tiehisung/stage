@@ -1,6 +1,6 @@
 import { ITeamProps } from "@/components/fixturesAndResults";
 import _players from "./players";
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 
 export const teamKFC = {
   _id: "1",

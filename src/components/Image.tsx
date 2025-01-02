@@ -1,6 +1,6 @@
 "use client";
 
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 import Image from "next/image";
 import React, { ReactNode } from "react";
 interface ImageDisplayProps extends IFileProps {
@@ -24,7 +24,9 @@ const ImageDisplayCard = ({
         height={500}
         className={`rounded-badge ${className}`}
       />
-      <div className="max-w-full">{footer ?? <p className="font-light">{description}</p>}</div>
+      <div className="max-w-full">
+        {footer ?? <p className="font-light">{description}</p>}
+      </div>
     </div>
   );
 };

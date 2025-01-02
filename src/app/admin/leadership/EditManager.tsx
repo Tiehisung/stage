@@ -193,7 +193,7 @@ export default function ManagerFormModal({ manager }: { manager: IManager }) {
               required
               onChange={OnchangeManager}
               name="dob"
-              value={formData?.dob}
+              value={formData?.DoB}
               className=" border px-2 w-60 h-7 rounded font-semibold"
             />
           </div>

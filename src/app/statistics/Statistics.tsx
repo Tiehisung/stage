@@ -1,5 +1,5 @@
 import { _playerStats } from "@/data/statistics";
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 import Image from "next/image";
 import React, { FC } from "react";
 

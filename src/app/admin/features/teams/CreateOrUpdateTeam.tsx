@@ -7,7 +7,7 @@ import { IconInput } from "@/components/input/Inputs";
 import PrimaryModal from "@/components/modals/Modals";
 import { apiConfig } from "@/lib/configs";
 import { TConvertedFile } from "@/types/file";
-import { IFileUpload } from "@/types/interface";
+import { IFileUpload } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
@@ -68,7 +68,7 @@ export const NewTeamForm = () => {
         className="primary__btn px-2 ml-auto"
       />
       <PrimaryModal isOpen={isOpen} setIsOpen={setIsOpen} className="">
-        <div  className=" rounded-xl bg-slate-100 p-3">
+        <div className=" rounded-xl bg-slate-100 p-3">
           <h1 className="font-light text-sm mb-2 text-red-700 text-center">
             Register new team
           </h1>

@@ -2,18 +2,18 @@ import { FaEdit } from "react-icons/fa";
 import { ScrollToPointBtn } from "@/components/ScrollToPoint";
 import { CgPerformance } from "react-icons/cg";
 import { FcGallery } from "react-icons/fc";
-import UpdatePlayerGallery, { PlayerGalleriesAdm } from "./GalleryForm";
 import PlayerActivation from "./Activation";
 import Performance from "./Performance";
 import UpdatePlayerFitness from "./FitnessUpdate";
 import { GiHealthNormal, GiPresent } from "react-icons/gi";
-import PlayerProfileForm from "../../player-signup/Forms";
 import { GetPlayers } from "../page";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import DeletePlayer from "./DeletePlayer";
 import CardAndFit from "./CardAndFit";
+import PlayerProfileForm from "../../player-signing/Forms";
+import UpdatePlayerGallery, { PlayerGalleriesAdm } from "./GalleryForm";
 
-export default async function PlayerProfilePage({ params }) {
+export default async function PlayerProfilePage({ params }:{params:{playerId:string}}) {
   const playerId = params.playerId;
   const player = await GetPlayers(playerId);
 
@@ -30,7 +30,7 @@ export default async function PlayerProfilePage({ params }) {
       <div className="bg-[#000000ac] text-white w-full px-1 flex gap-2 overflow-x-auto sticky z-10 top-0 hidden__scrollbar">
         <ScrollToPointBtn
           sectionId={"edit-player"}
-          styles="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
+          className="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
           label={"Edit"}
         >
           <FaEdit />
@@ -38,7 +38,7 @@ export default async function PlayerProfilePage({ params }) {
 
         <ScrollToPointBtn
           sectionId={"player-performance"}
-          styles="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
+          className="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
           label={"Performance"}
         >
           <CgPerformance />
@@ -46,7 +46,7 @@ export default async function PlayerProfilePage({ params }) {
 
         <ScrollToPointBtn
           sectionId={"fitness-update"}
-          styles="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
+          className="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
           label={"Fitness"}
         >
           <GiHealthNormal />
@@ -54,7 +54,7 @@ export default async function PlayerProfilePage({ params }) {
 
         <ScrollToPointBtn
           sectionId={"gallery"}
-          styles="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
+          className="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
           label={"Gallery"}
         >
           <FcGallery />
@@ -62,7 +62,7 @@ export default async function PlayerProfilePage({ params }) {
 
         <ScrollToPointBtn
           sectionId={"activate-player"}
-          styles="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
+          className="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
           label={player?.isActive ? "Deactivate" : "Activate"}
         >
           <GiPresent />
@@ -70,7 +70,7 @@ export default async function PlayerProfilePage({ params }) {
 
         <ScrollToPointBtn
           sectionId={"delete-player"}
-          styles="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
+          className="flex gap-1 items-center shadow p-1 hover:text-blue-400 transition-transform"
           label={"Delete"}
         >
           <RiDeleteBin2Line />
@@ -130,12 +130,7 @@ export default async function PlayerProfilePage({ params }) {
           <UpdatePlayerGallery
             player={player}
             folder={
-              "players/" +
-              new Date().getFullYear() +
-              "/" +
-              player?.firstName +
-              "_" +
-              player?.lastName
+              `players/${new Date().getFullYear()}/${player?.firstName}_${player?.lastName}`
             }
           />
         </li>

@@ -28,6 +28,7 @@ interface ITextAreaProps extends IInput {
   labelStyles?: string;
   labelStylesFocus?: string;
   label?: string;
+  wrapperStyles?: string;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 export function TextArea({
@@ -41,17 +42,23 @@ export function TextArea({
   required = false,
   label = "",
   others,
+  wrapperStyles,
 }: ITextAreaProps) {
   const [isFocus, setIsFocus] = useState(false);
   useEffect(() => {
     setIsFocus(value ? true : false);
   }, [value]);
   return (
-    <div className="tooltip w-full group" data-tip={dataTip}>
+    <div
+      className={`relative w-full group ${wrapperStyles}`}
+      data-tip={dataTip}
+    >
       <label
         htmlFor={name}
-        className={`absolute left-4 transition-all duration-200 ease-linear delay-0 select-none bg-base-100 ${
-          isFocus ? "-top-4 px-1 text-sm" : " top-3 text-gray-600 font-semibold"
+        className={`absolute transition-all duration-200 ease-linear delay-0 select-none ${
+          isFocus
+            ? "-top-10 left-0 text-sm"
+            : " top-3 left-4 text-gray-600 font-semibold"
         } ${labelStyles}`}
       >
         {label}
@@ -68,7 +75,7 @@ export function TextArea({
         onChange={(e) => {
           onChange(e);
         }}
-        className={`outline-none focus:ring-4 ring-blue-500/20 focus:border-blue-400 rounded p-2 text-primaryGrey dark:text-white w-full h-12 min-h-[48px] max-h-[40vh] border border-primaryGreen bg-base-100 ${className}`}
+        className={`outline-none border border-gray-300 focus:border-blue-400 shadow-blue-100/50 rounded px-2 text-primary w-full min-h-20 bg-white ${className}`}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(value ? true : false)}
         {...others}

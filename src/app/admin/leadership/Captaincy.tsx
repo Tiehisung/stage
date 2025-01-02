@@ -9,7 +9,7 @@ import { GetCaptains } from "./page";
 import { GetPlayers } from "../players/page";
 import { Button } from "@/components/buttons/SubmitAndClick";
 import { getErrorMessage } from "@/lib";
-import { IResultProps } from "@/types/interface";
+import { IResultProps } from "@/types";
 import { IPlayer } from "@/app/players/page";
 import { staticPeople } from "@/assets/images";
 

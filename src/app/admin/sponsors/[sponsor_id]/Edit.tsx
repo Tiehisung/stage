@@ -9,7 +9,7 @@ import defaultLogo from "@/public/images/breakfast2.jpg";
 import { toast } from "react-toastify";
 import { ISponsorProps } from "@/app/sponsorship/page";
 import { getFilePath } from "@/lib";
-import { IResultProps } from "@/types/interface";
+import { IResultProps } from "@/types";
 import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
 
 export default function EditSponsor({ sponsor }: { sponsor: ISponsorProps }) {

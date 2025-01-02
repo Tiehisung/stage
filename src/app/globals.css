@@ -130,8 +130,8 @@ body {
   @apply text-[#ec533fdf] hover:text-[#ec4646] active:text-[#fd586e] transition-all duration-200 disabled:bg-red-100 disabled:text-red-400;
 }
 
-.__h1 {
-  @apply text-center text-4xl font-bold;
+._title {
+  @apply text-center text-2xl sm:text-4xl font-bold bg-gray-600 text-white pb-1;
 }
 
 .__h2 {

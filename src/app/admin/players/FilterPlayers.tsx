@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 export default function FilterPlayers({}) {
   const router = useRouter();
 
-  const handleOnChangeFilter = (e) => {
+  const handleOnChangeFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("p_filter", value.toLowerCase());
     const newPathname =
-      window.location.pathname + "?" + searchParams.toString();
+      `${window.location.pathname}?${searchParams.toString()}`;
     router.push(newPathname);
   };
   return (

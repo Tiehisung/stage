@@ -1,6 +1,6 @@
 import { IPlayer } from "@/app/players/page";
 import { IPlayerStatsProps } from "@/app/statistics/Statistics";
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 
 export type TMatchType = "home" | "away";
 export type MatchStatus =
@@ -31,7 +31,7 @@ export interface ITeamProps {
   community: string;
   alias: string;
   logo: IFileProps;
-  currentPlayers:IPlayerStatsProps[]
+  currentPlayers: IPlayerStatsProps[];
   createdAt: string;
   updatedAt: string;
 }

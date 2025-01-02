@@ -9,6 +9,7 @@ import { GiAmericanFootballPlayer } from "react-icons/gi";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import {
   CgDatabase,
+  CgGames,
   CgPushChevronDownO,
   CgPushChevronLeftO,
 } from "react-icons/cg";
@@ -20,6 +21,7 @@ import { FcManager } from "react-icons/fc";
 import { useSession } from "next-auth/react";
 import { ReactNode } from "react";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
+import { VscLiveShare } from "react-icons/vsc";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -126,6 +128,18 @@ export function LeftPane() {
           </li>
         </Link>
 
+        <Link href={"/admin/live-match"}>
+          <li
+            className={`px-1 flex items-center gap-2 h-10  text-sm ${
+              activeLink("/admin/live-match")
+                ? "bg-blue-300 hover:bg-blue-300 text-white"
+                : "hover:bg-slate-100"
+            }`}
+          >
+            <VscLiveShare className="text-3xl " />
+            Live match
+          </li>
+        </Link>
         <Link href={"/admin/news"}>
           <li
             className={`px-1 flex items-center gap-2 h-10  text-sm ${
@@ -139,16 +153,16 @@ export function LeftPane() {
           </li>
         </Link>
 
-        <Link href={"/admin/player-signup"}>
+        <Link href={"/admin/player-signing"}>
           <li
             className={` px-1 flex items-center gap-2 h-10  text-sm ${
-              activeLink("/admin/player-signup")
+              activeLink("/admin/player-signing")
                 ? "   bg-blue-300 hover:bg-blue-300 text-white"
                 : "hover:bg-slate-100"
             }`}
           >
             <GiAmericanFootballPlayer className="text-3xl " />
-            Player signup
+            Player signing
           </li>
         </Link>
 
@@ -284,6 +298,22 @@ export function LeftPaneMobile({
             News
           </li>
         </Link>
+        <Link
+          onClick={() => setIsOpen((p) => !p)}
+          className="h-10 border "
+          href={"/admin/live-match"}
+        >
+          <li
+            className={`px-1 w-full h-10  flex gap-2 items-center  ${
+              activeLink("/admin/live-match")
+                ? "bg-blue-300 hover:bg-blue-300 text-white"
+                : "hover:bg-slate-100"
+            }`}
+          >
+            <CgGames className="text-3xl " />
+            Live match
+          </li>
+        </Link>
 
         <Link
           onClick={() => setIsOpen((p) => !p)}
@@ -322,17 +352,17 @@ export function LeftPaneMobile({
         <Link
           onClick={() => setIsOpen((p) => !p)}
           className="h-10 border "
-          href={"/admin/player-signup"}
+          href={"/admin/player-signing"}
         >
           <li
             className={` px-1 w-full h-10  flex gap-2 items-center  ${
-              activeLink("/admin/player-signup")
+              activeLink("/admin/player-signing")
                 ? "   bg-blue-300 hover:bg-blue-300 text-white"
                 : "hover:bg-slate-100"
             }`}
           >
             <GiAmericanFootballPlayer className="text-3xl " />
-            Player signup
+            Player signing
           </li>
         </Link>
 

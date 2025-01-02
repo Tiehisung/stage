@@ -1,17 +1,17 @@
 "use client";
 
+import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
 import { GeneralSelector } from "@/components/Selectors";
-import FormSubmitBtn from "@/components/buttons/formBtn";
 import { baseUrl } from "@/lib/configs";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function DeletePlayer({ playerId }) {
+export default function DeletePlayer({ playerId }:{playerId:string}) {
   const router = useRouter();
-  const [waiting, setWaiting] = useState();
+  const [waiting, setWaiting] = useState(false);
   const [formData, setFormData] = useState({ reason: "", detail: "" });
-  async function handleSubmit(e) {
+  async function handleSubmit(e:FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setWaiting(true);
     const response = await fetch(baseUrl() + "/api/players/" + playerId + "", {
@@ -63,7 +63,7 @@ export default function DeletePlayer({ playerId }) {
       <FormSubmitBtn
         primaryText={"Delete player"}
         waitingText={"Deleting player"}
-        styles="delete__btn w-fit px-5 rounded shadow"
+        className="delete__btn w-fit px-5 rounded shadow"
         waiting={waiting}
         disabled={waiting || !formData.detail || !formData.reason}
       />

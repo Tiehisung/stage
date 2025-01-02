@@ -1,7 +1,7 @@
 import { apiConfig } from "@/lib/configs";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import FileModel from "@/models/file";
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const revalidate = 0;

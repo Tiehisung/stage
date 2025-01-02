@@ -1,16 +1,18 @@
 "use client";
 
-import FormSubmitBtn from "@/components/buttons/formBtn";
+import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
+import { getErrorMessage } from "@/lib";
 import { baseUrl } from "@/lib/configs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function PlayerActivation({ playerId,isActive }) {
+export default function PlayerActivation({ playerId,isActive }:{playerId:string, isActive:boolean}) {
   const [waiting, setWaiting] = useState(false);
   const router = useRouter();
   const [reason, setReason] = useState("");
-  async function handleSubmit(e) {
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       setWaiting(true);
@@ -29,7 +31,7 @@ export default function PlayerActivation({ playerId,isActive }) {
       toast(result.message, { type: result.success ? "success" : "error" });
       router.refresh();
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     } finally {
       setWaiting(false);
     }
@@ -54,7 +56,7 @@ export default function PlayerActivation({ playerId,isActive }) {
           isActive ? "Deactivating, please wait..." : "Reactivating..."
         }
         disabled={waiting || !reason}
-        styles="delete__btn w-fit h-20 px-5 rounded shadow"
+        className="delete__btn w-fit h-20 px-5 rounded shadow"
       />
     </form>
   );

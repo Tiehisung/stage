@@ -5,9 +5,7 @@ import { BsX } from "react-icons/bs";
 import { Button } from "../buttons/SubmitAndClick";
 import { useState } from "react";
 import { TConvertedFile } from "@/types/file";
-import { IFileProps } from "@/types/interface";
-
- 
+import { IFileProps } from "@/types";
 
 type DisplayFileProps = {
   file: TConvertedFile;
@@ -71,7 +69,6 @@ export default function DisplayFileLocal({
     </div>
   );
 }
- 
 
 type RemoteFileDisplayProps = {
   file: IFileProps;
@@ -120,7 +117,8 @@ export function DisplayFileRemote({
       )}
       <span className="absolute top-0 left-0 bg-modalOverlay text-arsh px-1 text-xs max-w-[100px] truncate hover:max-w-full ">
         {file.resource_type.includes("video")
-          ? "Media | " + (file.name || (file.public_id?.split("/").pop() ?? "unknown"))
+          ? "Media | " +
+            (file.name || (file.public_id?.split("/").pop() ?? "unknown"))
           : ""}
       </span>
     </div>

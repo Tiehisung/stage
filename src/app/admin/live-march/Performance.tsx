@@ -1,25 +1,25 @@
 "use client";
 
-import FormSubmitBtn from "@/components/buttons/formBtn";
-import { baseUrl } from "@/lib/configs";
+import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
+import { apiConfig, baseUrl } from "@/lib/configs";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function Performance({ playerId }) {
+export default function Performance({ playerId }: { playerId: string }) {
   const router = useRouter();
   const [waiting, setWaiting] = useState(false);
   const [formData, setFormData] = useState({ ...formModel });
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: parseFloat(value) }));
   };
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setWaiting(true);
     const response = await fetch(
-      baseUrl() + "/api/players/" + playerId + "/performance",
+      `${apiConfig.players} /${playerId}/performance`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -123,7 +123,7 @@ export default function Performance({ playerId }) {
         waitingText={"Updating, wait..."}
         waiting={waiting}
         disabled={waiting}
-        styles="default__btn w-60 h-16 px-5 rounded shadow mt-6"
+        className="default__btn w-60 h-16 px-5 rounded shadow mt-6"
       />
     </form>
   );

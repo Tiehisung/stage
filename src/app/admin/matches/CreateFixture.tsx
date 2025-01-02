@@ -9,7 +9,7 @@ import { ResponsiveModal } from "@/components/modals/Responsive";
 import { getErrorMessage, getTeams } from "@/lib";
 import { apiConfig } from "@/lib/configs";
 import { customStyles } from "@/styles";
-import { ISelectOptionLV } from "@/types/interface";
+import { ISelectOptionLV } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Select from "react-select";

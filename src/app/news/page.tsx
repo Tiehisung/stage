@@ -1,4 +1,4 @@
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 import React from "react";
 
 const NewsPage = () => {
@@ -25,5 +25,3 @@ export interface INewsProps {
   createdAt: string;
   updatedAt: string;
 }
-
- 

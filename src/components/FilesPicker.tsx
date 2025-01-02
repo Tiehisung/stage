@@ -6,20 +6,17 @@ import { CgClose } from "react-icons/cg";
 import Loader from "./Loader";
 import { getFilePath } from "@/lib";
 import { ChangeEvent } from "react";
+import { TConvertedFile } from "@/types/file";
 
-interface File {
-  name: string;
-  type: string;
-  path: string;
-}
+ 
 
 interface FilesPickerProps {
   fileStyles?: string;
   wrapperStyles?: string;
-  convertedFiles: File[];
-  setConvertedFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  hiddenFilesAfterUpload?: File[];
-  nowUploading?: File | null;
+  convertedFiles: TConvertedFile[];
+  setConvertedFiles: React.Dispatch<React.SetStateAction<TConvertedFile[]>>;
+  hiddenFilesAfterUpload?: TConvertedFile[];
+  nowUploading?: TConvertedFile | null;
 }
 
 export default function FilesPicker({
@@ -48,7 +45,7 @@ export default function FilesPicker({
   };
 
   return (
-    <div className={`py-4 bg-arsh ${wrapperStyles}`}>
+    <div className={`py-4 ${wrapperStyles}`}>
       <div className="flex flex-wrap items-center gap-3">
         <label
           htmlFor="file"
@@ -73,7 +70,7 @@ export default function FilesPicker({
       </div>
 
       <section
-        className={` flex-wrap gap-2 py-2 justify-center bg-white ${
+        className={` flex-wrap gap-2 py-2 bg-white ${
           convertedFiles.length == 0 ? "hidden" : "flex"
         }  `}
       >

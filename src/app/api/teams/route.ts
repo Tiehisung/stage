@@ -7,7 +7,7 @@ import { ITeamProps } from "@/components/fixturesAndResults";
 import { apiConfig } from "@/lib/configs";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import TeamModel from "@/models/teams";
-import { IFileProps, IResultProps } from "@/types/interface";
+import { IFileProps, IResultProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const revalidate = 0;

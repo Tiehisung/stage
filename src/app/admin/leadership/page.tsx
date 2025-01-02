@@ -4,7 +4,7 @@ import ManagerFormModal from "./EditManager";
 import { baseUrl } from "@/lib/configs";
 import Image from "next/image";
 import CaptaincyAdm from "./Captaincy";
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 
 export interface IManager {
   email: string;

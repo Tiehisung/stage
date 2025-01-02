@@ -1,17 +1,19 @@
 "use client";
 
-import { ClickButton } from "@/components/buttons/formBtn";
+import { IPlayer } from "@/app/players/page";
+import { Button } from "@/components/buttons/SubmitAndClick";
+import { getErrorMessage } from "@/lib";
 import { baseUrl } from "@/lib/configs";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function CardAndFit({ player }) {
+export default function CardAndFit({ player }: { player: IPlayer }) {
   const router = useRouter();
 
   const [waiting, setWaiting] = useState("");
 
-  const handleToggleYellow = async (e) => {
+  const handleToggleYellow = async (e:ChangeEvent<HTMLInputElement>) => {
     try {
       const { checked } = e.target;
 
@@ -31,10 +33,10 @@ export default function CardAndFit({ player }) {
       setWaiting("");
       router.refresh();
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
-  const handleToggleRed = async (e) => {
+  const handleToggleRed = async (e:ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     try {
       setWaiting("red");
@@ -53,11 +55,11 @@ export default function CardAndFit({ player }) {
       setWaiting("");
       router.refresh();
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
 
-  const handleToggleFitness = async (e) => {
+  const handleToggleFitness = async (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
 
     try {
@@ -77,18 +79,18 @@ export default function CardAndFit({ player }) {
       setWaiting("");
       router.refresh();
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
   return (
     <div className="grid grid-cols-3 items-center font-bold">
       <span>
         <h3 className="text-gray-800">💪Fit</h3>
-        <ClickButton
+        <Button
           primaryText={""}
           waiting={waiting == "isFit"}
           waitingText=""
-          styles=" flex items-center text-arsh text-2xl"
+          className=" flex items-center text-arsh text-2xl"
           disabled={waiting == "isFit"}
         >
           <input
@@ -98,16 +100,16 @@ export default function CardAndFit({ player }) {
             name="fitness"
             className="h-10 w-10 grayscale"
           />
-        </ClickButton>
+        </Button>
       </span>
 
       <span className="text-red-500">
         <h3>🟥Red card</h3>
-        <ClickButton
+        <Button
           primaryText={""}
           waiting={waiting == "red"}
           waitingText=""
-          styles=" flex items-center text-arsh text-2xl"
+          className=" flex items-center text-arsh text-2xl"
           disabled={waiting == "red"}
         >
           <input
@@ -117,16 +119,16 @@ export default function CardAndFit({ player }) {
             name="red"
             className="h-10 w-10 grayscale"
           />
-        </ClickButton>
+        </Button>
       </span>
 
       <span className="text-yellow-500 ">
         <h3 className="whitespace-nowrap">🟨Yellow card</h3>
-        <ClickButton
+        <Button
           primaryText={""}
           waiting={waiting == "yellow"}
           waitingText=""
-          styles=" flex items-center text-arsh text-2xl"
+          className=" flex items-center text-arsh text-2xl"
           disabled={waiting == "yellow"}
         >
           <input
@@ -136,7 +138,7 @@ export default function CardAndFit({ player }) {
             name="yellow"
             className="h-10 w-10 grayscale"
           />
-        </ClickButton>
+        </Button>
       </span>
     </div>
   );

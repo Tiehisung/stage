@@ -1,7 +1,7 @@
 import { apiConfig } from "@/lib/configs";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import PlayerModel from "@/models/player";
-import { IFileProps, IResultProps } from "@/types/interface";
+import { IFileProps, IResultProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";

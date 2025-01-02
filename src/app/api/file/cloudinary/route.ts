@@ -1,4 +1,4 @@
-import { IFileProps, IFileUpload } from "@/types/interface";
+import { IFileProps, IFileUpload } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 import cld from "cloudinary";

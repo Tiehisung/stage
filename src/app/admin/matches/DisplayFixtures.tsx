@@ -23,9 +23,7 @@ export function DisplayFixtures({ fixtures, teams }: DisplayFixturesProps) {
   return (
     <div>
       <table className="table my-10 table-auto ">
-        <caption className="font-bold text-3xl bg-gray-600 text-white">
-          Fixtures
-        </caption>
+        <caption className="_title">Fixtures</caption>
         <tbody>
           <tr className="border p-2 ">
             <th>Title</th>

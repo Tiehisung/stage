@@ -3,7 +3,7 @@
 /**
  *
  * @param {*} data The array list of data from source.
- * @param styles The className for customizing the selector styles
+ * @param className The className for customizing the selector className
  * @param label For short instruction label indicating the direction of use.
  * @param selectedValue Intended to prefetch and set the already chosen value in formData
  * @param name Used in combination with handleOnChange to set the value of the select element appropriately in the form.
@@ -18,7 +18,7 @@ import { ImKeyboard } from "react-icons/im";
 
 type GeneralSelectorProps = {
   data?: string[];
-  styles?: string;
+  className?: string;
   label?: string;
   selectedValue?: string;
   required?: boolean;
@@ -30,7 +30,7 @@ type GeneralSelectorProps = {
 
 export function GeneralSelector({
   data = [],
-  styles = "basic__select capitalize bg-gray-400 text-yellow-100",
+  className = " capitalize ",
   label = "Select",
   selectedValue = "",
   required = true,
@@ -44,7 +44,7 @@ export function GeneralSelector({
       name={name}
       onChange={handleOnChange}
       required={required}
-      className={styles}
+      className={`p-1 bg-gray-100 capitalize ${className}`}
       id={id || name}
       disabled={disabled}
       value={selectedValue}

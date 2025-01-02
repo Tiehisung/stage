@@ -5,7 +5,7 @@ export default function postConfig(bodyObject: object) {
     body: JSON.stringify(bodyObject),
   };
 }
-export function putConfig(bodyObject:object) {
+export function putConfig(bodyObject: object) {
   return {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -54,11 +54,11 @@ export async function uploadSingleFile({
 }
 
 export const apiConfig = {
-  sponsor: baseUrl() + "/api/sponsor",
-  teams: baseUrl() + "/api/teams",
-  matches: baseUrl() + "/api/matches",
-  players: baseUrl() + "/api/players",
-  //File
-  file: baseUrl() + "/api/file", //Interacts with db
-  fileUpload: baseUrl() + "/api/file/cloudinary", //Interacts with storage(cld)
+  sponsor: `${baseUrl()}/api/sponsor`,
+  teams: `${baseUrl()}/api/teams`,
+  matches: `${baseUrl()}/api/matches`,
+  players: `${baseUrl()}/api/players`,
+  managers: `${baseUrl()}/api/managers`,
+  file: `${baseUrl()}/api/file`, //Interacts with db
+  fileUpload: `${baseUrl()}/api/file/cloudinary`, //Interacts with storage(cld)
 };

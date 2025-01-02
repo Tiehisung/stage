@@ -5,7 +5,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { BiCheck } from "react-icons/bi";
 import { RxTriangleDown } from "react-icons/rx";
 import HideOnClickOutside from "./HideOnClickOutside";
-import { ISelectOptionLV } from "@/types/interface";
+import { ISelectOptionLV } from "@/types";
 
 /**
  *A dropdown that features a checkmark on the selected item.

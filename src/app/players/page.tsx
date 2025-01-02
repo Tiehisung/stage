@@ -1,4 +1,4 @@
-import { IFileProps } from "@/types/interface";
+import { IFileProps } from "@/types";
 import React from "react";
 import { IManager } from "../admin/leadership/page";
 
@@ -8,22 +8,31 @@ const PlayersPage = () => {
 
 export default PlayersPage;
 
+export type TPlayerGallery = {
+  date: string;
+  timestamp: number;
+  description: string;
+  files: Array<IFileProps>;
+};
+
 export interface IPlayer {
-  card: 'yellow'|'red';
+  medicals: { fitness: string }[];
+  galleries: TPlayerGallery[];
+  card: "yellow" | "red";
   isFit: boolean;
   captaincy: string;
   firstName: string;
   lastName: string;
-  dateSigned:string
+  dateSigned: string;
   phone: string;
-  email: string;dob:string;
+  email: string;
+  dob: string;
   height: string;
   _id: string;
   avatar: IFileProps;
   jersey: string | number;
   manager: IManager;
   position: TPlayerPosition;
-  
 }
 
 export type TPlayerPosition =

@@ -2,7 +2,7 @@ import { IUpdateTeam } from "@/app/admin/features/teams/CreateOrUpdateTeam";
 import { apiConfig } from "@/lib/configs";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import TeamModel from "@/models/teams";
-import { IFileProps, IResultProps } from "@/types/interface";
+import { IFileProps, IResultProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const revalidate = 0;
@@ -60,7 +60,10 @@ export async function PUT(request: NextRequest) {
 }
 
 //Get teams
-export async function GET(req: NextRequest, { params }: { params: { teamId: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { teamId: string } }
+) {
   try {
     const team = await TeamModel.findById(params.teamId);
     return NextResponse.json({

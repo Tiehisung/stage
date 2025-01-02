@@ -3,7 +3,7 @@ import { apiConfig } from "@/lib/configs";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import ArchivesModel from "@/models/archive";
 import PlayerModel from "@/models/player";
-import { IResultProps, IFileProps } from "@/types/interface";
+import { IResultProps, IFileProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -64,13 +64,16 @@ export async function PUT(request: NextRequest) {
         });
       }
       const saved = await PlayerModel.findByIdAndUpdate(formData._id, {
-        $set: { ...formData, avatar: uploadedImage.data ? uploadedImage.data._id : null },
+        $set: {
+          ...formData,
+          avatar: uploadedImage.data ? uploadedImage.data._id : null,
+        },
       });
       if (saved)
         return NextResponse.json({ message: "Update success", success: true });
     } else {
       const saved = await PlayerModel.findByIdAndUpdate(formData._id, {
-        $set: { ...formData, },
+        $set: { ...formData },
       });
       if (saved)
         return NextResponse.json({ message: "Update success", success: true });

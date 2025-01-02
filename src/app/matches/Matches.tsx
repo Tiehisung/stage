@@ -6,7 +6,7 @@ import { PlayedMatchCarch } from "@/components/fixturesAndResults/Cards";
 import { _pagination, PaginationCP } from "@/components/Pagination";
 import React, { useState } from "react";
 import { SearchQueryUpdator } from "./Headers";
-import { ISelectOptionLV } from "@/types/interface";
+import { ISelectOptionLV } from "@/types";
 
 const MatchesSection = ({ matches }: { matches: IMatchProps[] }) => {
   const filters = ["home", "away", "lost", "wins", "draws"];

@@ -9,6 +9,13 @@ export interface IResultProps<T = unknown> {
   data?: T;
 }
 
+export type TConvertedFile = {
+  name: string;
+  type: string;
+  path: string;
+  bytes?: number;
+};
+
 export interface IFileProps {
   _id: string; //Trace any saved file data on db
   secure_url: string;
@@ -21,7 +28,6 @@ export interface IFileProps {
   updatedAt?: string;
 }
 
-
 export interface IFileUpload {
   name: string;
   path: string;
@@ -31,6 +37,17 @@ export interface IFileUpload {
   presetType?: TPresetType;
   description?: string;
 }
+
+export interface IGalleryProps {
+  description: string;
+  files: Array<IFileProps>;
+  name?: string;
+  _id?: string;
+  timestamp?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 //Cloudinary
 
 export type TPresetType = "authenticated" | "unauthenticated";

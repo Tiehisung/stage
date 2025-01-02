@@ -1,6 +1,6 @@
 "use client";
 
-import { baseUrl } from "@/lib/configs";
+import { apiConfig, baseUrl } from "@/lib/configs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FcCamera } from "react-icons/fc";
@@ -57,7 +57,7 @@ export default function NewManagerForm({}) {
       setWaiting(true);
       if (!formData.image) return toast.warn("Please choose picture");
       //Upload image
-      const upload = await fetch(baseUrl() + "/api/files/upload", {
+      const upload = await fetch(apiConfig .fileUpload, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,7 +78,7 @@ export default function NewManagerForm({}) {
       }
 
       //Proceed to save to database
-      let apiRoute = baseUrl() + `/api/managers`;
+      let apiRoute = apiConfig.managers;
       const response = await fetch(apiRoute, {
         body: JSON.stringify({ ...formData, image: uploadRsp.data }),
         cache: "no-cache",
