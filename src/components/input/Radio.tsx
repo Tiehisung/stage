@@ -17,25 +17,28 @@ const RadioButtons: FC<RadioButtonsProps> = ({
   className,
   setSelectedValue,
 }) => {
-  const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
+  const [option, setOption] = useState(defaultValue ?? "");
   useEffect(() => {
     if (typeof setSelectedValue !== "undefined") {
-      setSelectedValue(selectedOption);
+      setSelectedValue(option);
     }
-  }, [selectedOption]);
+  }, [option]);
   return (
     <ul className={`select-none ${wrapperStyles}`}>
       {values.map((val, i) => (
         <li
           key={i}
           className={`flex items-center gap-3 border cursor-pointer p-2 rounded-full hover:bg-slate-50 ${
-            selectedOption == val && "border-blue-600/55"
+            option == val && "border-blue-600/55"
           } ${className}`}
-          onClick={() => setSelectedOption(val as string)}
+          onClick={() => {
+            setOption(val);
+            setSelectedValue(val);
+          }}
         >
           <span
             className={`w-5 h-5 rounded-full border ${
-              selectedOption == val && "bg-blue-600/75"
+              option == val && "bg-blue-600/75"
             }`}
           ></span>
           <span> {val}</span>

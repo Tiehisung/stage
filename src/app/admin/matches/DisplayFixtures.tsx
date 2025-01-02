@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/buttons/SubmitAndClick";
-import { baseUrl } from "@/lib/configs";
+import { apiConfig } from "@/lib/configs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -9,43 +9,55 @@ import { toast } from "react-toastify";
 import { UpdateFixtureMatch } from "./CreateFixture";
 import { IMatchProps, ITeamProps } from "@/components/fixturesAndResults";
 import { getTeams } from "@/lib";
+import { getDateAsDMY } from "@/lib/timeAndDate";
 
 interface DisplayFixturesProps {
   fixtures: IMatchProps[];
-  teams:ITeamProps[]
+  teams: ITeamProps[];
 }
 // Fixture is  match that is not yet played successfully
 
-export function DisplayFixtures({ fixtures,teams }: DisplayFixturesProps) {
+export function DisplayFixtures({ fixtures, teams }: DisplayFixturesProps) {
   const [fixtureToEdit, setFixtureToEdit] = useState<IMatchProps | null>(null);
 
   return (
     <div>
-      <table className="table my-10">
+      <table className="table my-10 table-auto ">
         <caption className="font-bold text-3xl bg-gray-600 text-white">
           Fixtures
         </caption>
         <tbody>
-          <tr className="border p-2">
+          <tr className="border p-2 ">
             <th>Title</th>
             <th>Date</th>
             <th>Action</th>
           </tr>
           {fixtures.map((fixture) => (
             <tr key={fixture._id} className="border p-2 text-xl">
-              <td className="px-2 py-2">
-                {getTeams(fixture)?.home?.name ?? "Home"}
+              <td className="px-2 py-2 text-gray-600">
+                {getTeams(fixture)?.home?.name}
                 {" vs "}
-                {getTeams(fixture)?.away?.name ?? "Away"}
+                {getTeams(fixture)?.away?.name}
               </td>
-              <td className="px-2 py-2">{fixture.date}</td>
+              <td className="px-2 py-2 whitespace-nowrap">
+                {getDateAsDMY(fixture.date)}
+              </td>
               <td className="px-2 py-2 flex gap-5 text-sm ">
-                <UpdateFixtureMatch teams={teams} fixture={fixtureToEdit as unknown as IMatchProps} />
+                <UpdateFixtureMatch teams={teams} fixture={fixture} />
                 <DeleteFixture fixtureId={fixture._id} />
               </td>
             </tr>
           ))}
+          {fixtures.length === 0 && (
+            <tr>
+              <td colSpan={6} className="text-center _label">
+                No fixtures available.
+              </td>
+            </tr>
+          )}
         </tbody>
+
+        <tfoot>{"Fixtures: " + fixtures.length}</tfoot>
       </table>
     </div>
   );
@@ -59,11 +71,11 @@ export function DeleteFixture({ fixtureId }: { fixtureId: string }) {
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setWaiting(true);
-    const response = await fetch(baseUrl() + "/api/fixtures", {
+    const response = await fetch(apiConfig.matches, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        fixtureId: fixtureId,
+        matchId: fixtureId,
       }),
       cache: "no-cache",
     });

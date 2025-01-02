@@ -99,7 +99,7 @@ interface IInputProps extends IInput {
 }
 
 export function Input({
-  className = " bg-lightGray/10",
+  className = "",
   name,
   label = "",
   labelStyles = "",
@@ -142,7 +142,7 @@ export function Input({
             ? placeholder.substring(0, 27) + "..."
             : placeholder
         }
-        className={`outline-none border border-gray-300 focus:border-blue-400 shadow-blue-100/50 h-9 rounded px-2 text-primary w-full placeholder:line-clamp-1 slowTrans ${className}`}
+        className={`outline-none border border-gray-300 focus:border-blue-400 shadow-blue-100/50 h-9 rounded px-2 text-primary w-full placeholder:line-clamp-1 slowTrans bg-slate-50 ${className}`}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(value ? true : false)}
         {...others}
@@ -201,6 +201,70 @@ export function DateTimeInput({
     </label>
   );
 }
+
+export function IconInputWithLabel({
+  className = "",
+  name,
+  label = "",
+  labelStyles = "",
+  labelStylesFocus = "",
+  placeholder = "",
+  onChange,
+  value,
+  dataTip = "",
+  type = "text",
+  wrapperStyles = "",
+  others,
+  required = false,
+}: IInputProps) {
+  const [isFocus, setIsFocus] = useState(false);
+  useEffect(() => {
+    setIsFocus(value ? true : false);
+  }, [value]);
+  return (
+    <div
+      className={`flex items-center relative pl-[2px] border border-gray-300 focus-within:border-blue-400 shadow-blue-100/50 bg-slate-50 w-full rounded  ${wrapperStyles} `}
+      data-tip={dataTip}
+    >
+      <label
+        htmlFor={name}
+        className={`absolute transition-all duration-200 ease-linear delay-0 select-none ${
+          isFocus
+            ? `-top-6 text-sm font-semibold ${labelStylesFocus}`
+            : "ml-1 pl-7 top-1/4 text-gray-600"
+        } ${labelStyles}`}
+      >
+        {label}
+      </label>
+      <span
+        className={`text-2xl p-1 text-gray-700 slowTrans bg-slate-50 h-full flex items-center justify-center`}
+        hidden={!inputIcons.find((item) => item.type === type)}
+      >
+        {inputIcons.find((item) => item.type === type)?.icon}
+      </span>
+      <input
+        name={name}
+        id={name}
+        value={value}
+        type={type}
+        onChange={(e) => {
+          onChange(e);
+        }}
+        placeholder={
+          placeholder?.length > 30
+            ? placeholder.substring(0, 27) + "..."
+            : placeholder
+        }
+        className={`outline-none grow h-[40px] p-2  text-primary placeholder:line-clamp-1 slowTrans bg-slate-50 ${className}`}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(value ? true : false)}
+        {...others}
+        required={required}
+      />
+    </div>
+  );
+}
+
 export function IconInput({
   className = "",
   name,
@@ -239,57 +303,5 @@ export function IconInput({
         required={required}
       />
     </label>
-  );
-}
-export function InputZ({
-  className = "",
-  name,
-  label = "",
-  labelStyles = "",
-  placeholder = "",
-  onChange,
-  value,
-  dataTip = "",
-  type = "text",
-  wrapperStyles = "",
-  others,
-  required = false,
-}: IInputProps) {
-  const [isFocus, setIsFocus] = useState(false);
-  useEffect(() => {
-    setIsFocus(value ? true : false);
-  }, [value]);
-  return (
-    <div className={`grid  ${wrapperStyles} `} title={dataTip}>
-      <label
-        htmlFor={name}
-        className={`absolute transition-all duration-200 ease-linear delay-0 select-none bg-base-100 ${
-          isFocus
-            ? "-top-4 text-sm"
-            : "ml-1 pl-4 top-3 text-gray-600 font-semibold"
-        } ${labelStyles}`}
-      >
-        {label}
-      </label>
-      <input
-        name={name}
-        id={name}
-        value={value}
-        type={type}
-        placeholder={
-          placeholder?.length > 30
-            ? placeholder.substring(0, 27) + "..."
-            : placeholder
-        }
-        onChange={(e) => {
-          onChange(e);
-        }}
-        className={`outline-none focus:ring-4 ring-blue-500/20 focus:border-blue-400 rounded p-2 text-primaryGrey dark:text-white w-full h-12 border border-primaryGreen bg-base-100 placeholder:line-clamp-1 ${className}`}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(value ? true : false)}
-        {...others}
-        required={required}
-      />
-    </div>
   );
 }

@@ -7,8 +7,8 @@ import CaptaincyAdm from "./Captaincy";
 import { IFileProps } from "@/types/interface";
 
 export interface IManager {
-  email: string 
-  dob: string 
+  email: string;
+  DoB: string;
   _id: string;
   image: IFileProps;
   avatar: IFileProps;

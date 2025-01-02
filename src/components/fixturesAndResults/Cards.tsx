@@ -5,7 +5,8 @@ import { Button } from "../buttons/SubmitAndClick";
 import { IMatchProps } from ".";
 import { getTimeAgo } from "@/lib/timeAndDate";
 import { broadcasters } from "@/assets/broadcaster/broadcaster";
-import { teamKFC } from "@/data/teams";
+import { teamLogos } from "@/assets/teams/logos/team-logos";
+import { getTeams } from "@/lib";
 
 interface IMatchFixtureCardProps {
   match: IMatchProps;
@@ -13,12 +14,11 @@ interface IMatchFixtureCardProps {
 }
 
 export const MatchFixtureCard: React.FC<IMatchFixtureCardProps> = ({
-  match: { title, date, time, isHome, oponent },
+  match,
   className,
 }) => {
-  const homeTeam = isHome ? teamKFC : oponent;
-  const awayTeam = !isHome ? teamKFC : oponent;
-
+  const { title, date, time } = match;
+  const { home, away } = getTeams(match);
   return (
     <div
       className={
@@ -44,11 +44,11 @@ export const MatchFixtureCard: React.FC<IMatchFixtureCardProps> = ({
             <Image
               width={250}
               height={250}
-              src={homeTeam.logo.secure_url}
-              alt={homeTeam.name}
+              src={home?.logo?.secure_url ?? teamLogos[0].logo}
+              alt={home.name}
               className="w-12 h-12"
             />
-            <span className=" font-medium">{homeTeam.name}</span>
+            <span className=" font-medium">{home.name}</span>
           </div>
 
           {/* Match Time */}
@@ -71,13 +71,13 @@ export const MatchFixtureCard: React.FC<IMatchFixtureCardProps> = ({
           {/* Away Team */}
           <div className="flex flex-col items-center space-y-2">
             <Image
-              src={awayTeam.logo.secure_url}
+              src={away?.logo?.secure_url ?? teamLogos[0].logo}
               width={250}
               height={250}
-              alt={awayTeam.name}
+              alt={away.name}
               className="w-12 h-12"
             />
-            <span className=" font-medium">{awayTeam.name}</span>
+            <span className=" font-medium">{away.name}</span>
           </div>
         </div>
       </div>
@@ -90,15 +90,9 @@ export const PlayedMatchCarch: React.FC<{
   league: string;
   className?: string;
 }> = ({ league, match, className }) => {
-  const teams = match.isHome
-    ? [
-        { ...teamKFC, goals: match.scores.kfc },
-        { ...match.oponent, goals: match.scores.oponent },
-      ]
-    : [
-        { ...match.oponent, goals: match.scores.oponent },
-        { ...teamKFC, goals: match.scores.kfc },
-      ];
+  const { home, away } = getTeams(match);
+  const teams = [home, away];
+
   const timeAgo = match.status == "FT" ? `(${getTimeAgo(match.date)})` : "";
   return (
     <div
@@ -130,17 +124,17 @@ export const PlayedMatchCarch: React.FC<{
           {/* Team Details */}
           <div className="flex items-center space-x-3">
             <Image
-              src={team.logo.secure_url}
-              alt={team.name}
+              src={team?.logo?.secure_url ?? teamLogos[0].logo}
+              alt={team?.name}
               className="w-8 h-8 rounded-full"
               width={400}
               height={400}
             />
-            <span className="  font-medium">{team.name}</span>
+            <span className="  font-medium">{team?.name}</span>
           </div>
 
           {/* Team Score */}
-          <span className="text-xl font-bold">{team.goals.length}</span>
+          <span className="text-xl font-bold">{match.scores.kfc.length}</span>
         </div>
       ))}
     </div>
@@ -151,14 +145,9 @@ export const CanceledMatchCarch: React.FC<{
   match: IMatchProps;
   league: string;
   className?: string;
-}> = ({
-  league,
-  match: { isHome, oponent, challenge, status, date },
-  className,
-}) => {
-  const homeTeam = isHome ? teamKFC : oponent;
-  const awayTeam = !isHome ? teamKFC : oponent;
-  const timeAgo = status == "FT" ? `(${getTimeAgo(date)})` : "";
+}> = ({ league, match, className }) => {
+  const { home, away } = getTeams(match);
+
   return (
     <div
       className={
@@ -179,11 +168,11 @@ export const CanceledMatchCarch: React.FC<{
           <Image
             width={100}
             height={100}
-            src={homeTeam.logo.secure_url}
-            alt={homeTeam.name}
+            src={home?.logo?.secure_url ?? teamLogos[0].logo}
+            alt={home?.name}
             className="w-12 h-12"
           />
-          <span className="text-sm font-medium">{homeTeam.name}</span>
+          <span className="text-sm font-medium">{home.name}</span>
         </div>
 
         {/* Versus */}
@@ -194,17 +183,19 @@ export const CanceledMatchCarch: React.FC<{
           <Image
             width={100}
             height={100}
-            src={awayTeam.logo.secure_url}
-            alt={awayTeam.name}
+            src={away?.logo?.secure_url ?? teamLogos[0].logo}
+            alt={away?.name}
             className="w-12 h-12"
           />
-          <span className="text-sm font-medium">{awayTeam.name}</span>
+          <span className="text-sm font-medium">{away.name}</span>
         </div>
       </div>
 
       {/* Reason for Cancellation */}
       <div className="bg-red-100 text-red-600 text-center p-2 rounded-lg">
-        <span className="text-sm font-medium">Reason: {challenge?.tag}</span>
+        <span className="text-sm font-medium">
+          Reason: {match.challenge?.reason}
+        </span>
       </div>
     </div>
   );

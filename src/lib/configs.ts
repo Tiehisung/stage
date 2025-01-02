@@ -57,6 +57,7 @@ export const apiConfig = {
   sponsor: baseUrl() + "/api/sponsor",
   teams: baseUrl() + "/api/teams",
   matches: baseUrl() + "/api/matches",
+  players: baseUrl() + "/api/players",
   //File
   file: baseUrl() + "/api/file", //Interacts with db
   fileUpload: baseUrl() + "/api/file/cloudinary", //Interacts with storage(cld)

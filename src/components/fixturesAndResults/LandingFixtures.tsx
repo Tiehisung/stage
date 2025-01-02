@@ -1,5 +1,4 @@
 import React from "react";
-import matches from "@/data/matches";
 import {
   CanceledMatchCarch,
   MatchFixtureCard,
@@ -7,10 +6,13 @@ import {
 } from "./Cards";
 import { IMatchProps } from ".";
 import PrimLink from "../Link";
+import { GetMatches } from "@/app/admin/matches/page";
 
 const LandingFixtures = async () => {
+  const matches: IMatchProps[] = await GetMatches({});
   const fixtures = matches.filter((match) => match.status !== "FT");
-  const played = matches.filter((m) => m.status == "FT");
+  const played = matches.filter((match) => match.status == "FT"); //Full Time
+  console.log({ fixtures });
   return (
     <div className="px-3 space-y-10 ">
       <section>
@@ -23,32 +25,36 @@ const LandingFixtures = async () => {
           />
         </header>
         <div className="flex flex-wrap lg:grid-cols-2 xl:grid-cols-3 gap-[3vw] ">
-          {fixtures.map((match, index) => {
-            if (match.status == "LIVE" || match.status == "HT")
-              return (
-                <PlayedMatchCarch
-                  key={index}
-                  match={match as IMatchProps}
-                  league="Circuit Galla"
-                  className="grow sm:max-w-lg"
-                />
-              );
-            if (match.status == "CANCELED")
-              return (
-                <CanceledMatchCarch
-                  match={match as IMatchProps}
-                  className="grow sm:max-w-lg"
-                  key={index}
-                  league="Salah Games"
-                />
-              );
-            return (
-              <MatchFixtureCard
-                match={match as IMatchProps}
-                className="grow sm:max-w-lg"
-                key={index}
-              />
-            );
+          {fixtures?.map((match, index) => {
+            switch (match.status) {
+              case "LIVE":
+              case "HT":
+                return (
+                  <PlayedMatchCarch
+                    key={index}
+                    match={match as IMatchProps}
+                    league="Circuit Galla"
+                    className="grow sm:max-w-lg"
+                  />
+                );
+              case "CANCELED":
+                return (
+                  <CanceledMatchCarch
+                    match={match as IMatchProps}
+                    className="grow sm:max-w-lg"
+                    key={index}
+                    league="Salah Games"
+                  />
+                );
+              default:
+                return (
+                  <MatchFixtureCard
+                    match={match as IMatchProps}
+                    className="grow sm:max-w-lg"
+                    key={index}
+                  />
+                );
+            }
           })}
         </div>
       </section>
@@ -68,38 +74,6 @@ const LandingFixtures = async () => {
               match={match as IMatchProps}
               league="Circuit Galla"
               className="max-sm:grow "
-            />
-          ))}
-          {played.map((match, index) => (
-            <PlayedMatchCarch
-              key={index}
-              match={match as IMatchProps}
-              league="Circuit Galla"
-              className="grow sm:max-w-lg"
-            />
-          ))}
-          {played.map((match, index) => (
-            <PlayedMatchCarch
-              key={index}
-              match={match as IMatchProps}
-              league="Circuit Galla"
-              className="grow sm:max-w-lg"
-            />
-          ))}
-          {played.map((match, index) => (
-            <PlayedMatchCarch
-              key={index}
-              match={match as IMatchProps}
-              league="Circuit Galla"
-              className="grow sm:max-w-lg"
-            />
-          ))}
-          {played.map((match, index) => (
-            <PlayedMatchCarch
-              key={index}
-              match={match as IMatchProps}
-              league="Circuit Galla"
-              className="grow sm:max-w-lg"
             />
           ))}
         </div>

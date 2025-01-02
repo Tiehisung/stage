@@ -10,12 +10,15 @@ export default PlayersPage;
 
 export interface IPlayer {
   card: 'yellow'|'red';
-  isFit: unknown;
+  isFit: boolean;
   captaincy: string;
   firstName: string;
   lastName: string;
+  dateSigned:string
+  phone: string;
+  email: string;dob:string;
+  height: string;
   _id: string;
-  image: IFileProps; //To be removed later
   avatar: IFileProps;
   jersey: string | number;
   manager: IManager;

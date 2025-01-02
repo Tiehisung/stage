@@ -1,17 +1,17 @@
+"use client";
+
 import { IMatchProps } from "@/components/fixturesAndResults";
 import {
   PlayedMatchCarch,
   CanceledMatchCarch,
   MatchFixtureCard,
 } from "@/components/fixturesAndResults/Cards";
-import matches from "@/data/matches";
 import React from "react";
 import { SearchQueryUpdator } from "./Headers";
 import { _pagination, PaginationCP } from "@/components/Pagination";
 
-const FixturesSection = () => {
-  const fixtures = matches.filter((match) => match.status !== "FT");
-  const filters=['all','home','away','canceled',]
+const FixturesSection = ({ fixtures }: { fixtures: IMatchProps[] }) => {
+  const filters = ["all", "home", "away", "canceled"];
   return (
     <section id="fixtures">
       <header className="flex justify-between items-center gap-4">
@@ -53,5 +53,3 @@ const FixturesSection = () => {
 };
 
 export default FixturesSection;
-
-

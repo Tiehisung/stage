@@ -7,7 +7,7 @@ import RadioButtons from "@/components/input/Radio";
 import PrimaryModal from "@/components/modals/Modals";
 import { ResponsiveModal } from "@/components/modals/Responsive";
 import { getErrorMessage, getTeams } from "@/lib";
-import { apiConfig, baseUrl } from "@/lib/configs";
+import { apiConfig } from "@/lib/configs";
 import { customStyles } from "@/styles";
 import { ISelectOptionLV } from "@/types/interface";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export interface IPostMatch {
   date: string;
   time: string;
   isHome: boolean;
-  oponentId: string;
+  opponentId: string;
 }
 const CreateFixture = ({ teams }: { teams: ITeamProps[] }) => {
   const router = useRouter();
@@ -30,10 +30,10 @@ const CreateFixture = ({ teams }: { teams: ITeamProps[] }) => {
     value: t._id,
   }));
 
-  const [isHome, setIsHome] = useState<boolean>(false);
+  const [matchType, setMatchType] = useState<string>("");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
-  const [oponent, setOponent] = useState<ISelectOptionLV | null>(null);
+  const [opponent, setOpponent] = useState<ISelectOptionLV | null>(null);
   const [isOpenForm, setIsOpenForm] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,8 +44,8 @@ const CreateFixture = ({ teams }: { teams: ITeamProps[] }) => {
       const body = {
         date,
         time,
-        isHome,
-        oponentId: oponent?.value,
+        isHome: matchType === "home" ? true : false,
+        opponent: opponent?.value, //opponentId
       };
       const response = await fetch(apiConfig.matches, {
         method: "POST",
@@ -81,16 +81,16 @@ const CreateFixture = ({ teams }: { teams: ITeamProps[] }) => {
             <Select
               options={teamOptions}
               styles={customStyles}
-              onChange={(e) => setOponent(e as ISelectOptionLV)}
+              onChange={(e) => setOpponent(e as ISelectOptionLV)}
             />
           </div>
 
           <div>
             <p className="_label">Match type </p>
             <RadioButtons
-              defaultValue=""
-              setSelectedValue={(v) => setIsHome(v == "home" ? true : false)}
-              values={["Home", "Away"]}
+              defaultValue={matchType}
+              setSelectedValue={setMatchType}
+              values={["home", "away"]}
               wrapperStyles="flex gap-3 items-center"
             />
           </div>
@@ -120,7 +120,7 @@ const CreateFixture = ({ teams }: { teams: ITeamProps[] }) => {
             disabled={waiting}
             waitingText={"Saving..."}
             primaryText={"Save fixture"}
-            className="secondary__btn px-3 mt-2"
+            className="primary__btn px-3 mt-2 py-2"
           />
         </form>
       </PrimaryModal>
@@ -145,42 +145,50 @@ export const UpdateFixtureMatch = ({
     value: t._id,
   }));
 
-  const [isHome, setIsHome] = useState<boolean>(false);
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
-  const [oponent, setOponent] = useState<ISelectOptionLV | null>({
+  const [matchType, setMatchType] = useState<string>(
+    fx?.isHome ? "home" : "away"
+  );
+  const [time, setTime] = useState(fx?.time);
+
+  const [date, setDate] = useState(fx?.date);
+
+  const [opponent, setOpponent] = useState<ISelectOptionLV | null>({
     label: fx?.opponent?.name,
     value: fx?.opponent?._id,
   });
 
-  console.log({ isHome });
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log({ matchType });
     setWaiting(true);
     const body = {
+      ...fx,
       date,
       time,
-      isHome,
-      oponentId: oponent?.value,
+      isHome: matchType === "home" ? true : false,
+      opponent: opponent?.value, //opponentId
     };
-    const response = await fetch(baseUrl() + "/api/fixtures", {
+    const response = await fetch(apiConfig.matches, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...fx, ...body }),
+      body: JSON.stringify(body),
       cache: "no-cache",
     });
     const results = await response.json();
     toast(results.message, { type: results.success ? "success" : "error" });
     setWaiting(false);
-    // if (results.success) {
-    // }
+
     router.refresh();
   };
+
+  const { home, away } = getTeams(fx);
+
+  console.log({ fx });
   return (
     <ResponsiveModal modalId="update-match" trigger="Edit">
       <div>
         <h1 className="mb-4 text-lg md:text-xl">
-          {`Update ${getTeams(fx)?.home?.name} vs ${getTeams(fx)?.away?.name}`}
+          {`Update ${home?.name} vs ${away?.name}`}
         </h1>
         <form
           className="p-4 border rounded-xl space-y-4 bg-white shadow-md"
@@ -189,9 +197,10 @@ export const UpdateFixtureMatch = ({
           <div>
             <p className="_label ">Select team</p>
             <Select
+              defaultValue={opponent}
               options={teamOptions}
               styles={customStyles}
-              onChange={(e) => setOponent(e as ISelectOptionLV)}
+              onChange={(e) => setOpponent(e as ISelectOptionLV)}
             />
           </div>
 
@@ -199,7 +208,7 @@ export const UpdateFixtureMatch = ({
             <p className="_label">Match type </p>
             <RadioButtons
               defaultValue={fx?.isHome ? "home" : "away"}
-              setSelectedValue={(v) => setIsHome(v == "home" ? true : false)}
+              setSelectedValue={setMatchType}
               values={["home", "away"]}
               wrapperStyles="flex gap-3 items-center"
             />
@@ -230,7 +239,7 @@ export const UpdateFixtureMatch = ({
             disabled={waiting}
             waitingText={"Saving..."}
             primaryText={"Update fixture"}
-            className="secondary__btn px-3 mt-2"
+            className="primary__btn px-3 mt-2 py-2"
           />
         </form>
       </div>

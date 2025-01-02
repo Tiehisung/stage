@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiHome, BiMailSend, BiTable } from "react-icons/bi";
-import { useState } from "react";
+import {  useState } from "react";
 import { GiSoccerBall } from "react-icons/gi";
 import { TbTableRow } from "react-icons/tb";
 import { RiAdminLine, RiFundsFill } from "react-icons/ri";
@@ -13,15 +13,18 @@ import { AiOutlineMenuUnfold } from "react-icons/ai";
 import HideOnClickOutside from "./HideOnClickOutside";
 
 export default function HeaderCp() {
-  const pathname=usePathname()
-  if(pathname.startsWith('/admin'))return 
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return;
   return (
-    <div className="sticky top-0 flex justify-between items-center border-hidden w-full px-4 blue-600 shadow-sm shadow-stone-500 z-40">
+    <div
+      className={`sticky top-0 flex justify-between items-center border-hidden w-full px-4 blue-600 shadow-sm shadow-stone-500 z-40 bg-background `}
+    >
       <button className="spin-logo">
         <GiSoccerBall size={55} />
       </button>
 
-      <h1 className="flex text-yellow-200 font-likght text-xl md:text-2xl lg:text-3xl ">
+      <h1 className="flex text-yellow-700 font-likght text-xl md:text-2xl lg:text-3xl ">
         <span className="text-gray-600">Konjiehi</span> FC
       </h1>
 
@@ -88,7 +91,7 @@ interface MobilieNavCpProps {
   navLinks: { title: string; href: string }[];
 }
 
-export function MobilieNavCp({  }: MobilieNavCpProps) {
+export function MobilieNavCp({}: MobilieNavCpProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
