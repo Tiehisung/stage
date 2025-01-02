@@ -37,7 +37,7 @@ export default function NewManagerForm({}) {
     }));
   };
 
-  function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>) {
     let selectedFile = event.target.files ? event.target.files[0] : null;
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
@@ -46,7 +46,7 @@ export default function NewManagerForm({}) {
       );
       return;
     }
-    setImageFile(getFilePath(selectedFile));
+    setImageFile(await getFilePath(selectedFile));
      
   }
 

@@ -16,7 +16,7 @@ import mongoose, { Schema } from "mongoose";
 
 const gallerySchema = new Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String,},
     description: { type: String, trim: true },
     files: [{}], // IFileProps[]
     // Probable associated owners

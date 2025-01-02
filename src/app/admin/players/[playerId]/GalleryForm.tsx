@@ -68,7 +68,7 @@ export default function UpdatePlayerGallery({
       }
 
       //Create gallery------------------------------------------
-      const galleryResponse = await fetch(apiConfig.galleries, {
+      const newGalleryResponse = await fetch(apiConfig.galleries, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         cache: "no-cache",
@@ -77,9 +77,11 @@ export default function UpdatePlayerGallery({
           files: uploadedFiles,
         }),
       });
-      const savedGallery: IResultProps<IGalleryProps> =
-        await galleryResponse.json();
-      if (!savedGallery.success) return toast.error(savedGallery.message);
+      const savedNewGallery: IResultProps<IGalleryProps> =
+        await newGalleryResponse.json();
+
+        console.log({savedNewGallery})
+      if (!savedNewGallery.success) return toast.error(savedNewGallery.message);
       //Clear files
       setConvertedFiles([]);
 
@@ -89,10 +91,7 @@ export default function UpdatePlayerGallery({
         headers: { "Content-Type": "application/json" },
         cache: "no-cache",
         body: JSON.stringify({
-          galleries: [
-            ...player.galleries.map((g) => g._id),
-            savedGallery.data?._id,
-          ],
+          galleries: [savedNewGallery.data,...player.galleries, ],
         }),
       });
       const result = await response.json();
@@ -173,7 +172,7 @@ export default function UpdatePlayerGallery({
 
 export function PlayerGalleriesAdm({ player }: { player: IPlayer }) {
   const galleries = player?.galleries?.sort(
-    (a, b) => b.timestamp - a.timestamp
+    (a, b) => b?.timestamp - a?.timestamp
   );
   console.log({ player });
 
@@ -189,7 +188,7 @@ export function PlayerGalleriesAdm({ player }: { player: IPlayer }) {
             </cite>
           </h6>
           <div className="flex flex-wrap gap-2 ">
-            {galleryObj.files.map((gfile, fgIndex) => (
+            {galleryObj?.files?.map((gfile, fgIndex) => (
               <DisplayFileRemote
                 file={gfile}
                 key={fgIndex}

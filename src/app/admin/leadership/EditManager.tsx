@@ -41,14 +41,14 @@ export default function ManagerFormModal({ manager }: { manager: IManager }) {
     }));
   };
 
-  function handleImageSelection(e: ChangeEvent<HTMLInputElement>) {
+  async function handleImageSelection(e: ChangeEvent<HTMLInputElement>) {
     let selectedFile = e.target?.files ? e.target.files[0] : null;
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
       toast.error("Picture should not exceed 3.5mb");
       return;
     }
-    setImageFile(getFilePath(selectedFile));
+    setImageFile(await getFilePath(selectedFile));
   }
 
   //Handle submit

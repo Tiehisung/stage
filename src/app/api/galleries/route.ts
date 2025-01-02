@@ -19,7 +19,11 @@ export async function POST(request: NextRequest) {
     });
     console.log({ saved });
     if (saved)
-      return NextResponse.json({ message: "Gallery created", success: true });
+      return NextResponse.json({
+        message: "Gallery created",
+        success: true,
+        data: saved,
+      });
   } catch (error) {
     return NextResponse.json({
       message: getErrorMessage(error, "Failed to save gallery"),
@@ -29,7 +33,6 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(_: NextRequest) {
-  const galleries = await GalleryModel.find({})
-  .sort({ createdAt: "desc" });
+  const galleries = await GalleryModel.find({}).sort({ createdAt: "desc" });
   return NextResponse.json(galleries);
 }
