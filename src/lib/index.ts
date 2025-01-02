@@ -19,9 +19,9 @@ export function getErrorMessage(
 
   return customMessage ?? "Error occurred!";
 }
-export const getFilePath = (file: File) => URL.createObjectURL(file);
+export const createFileUrl = (file: File) => URL.createObjectURL(file);
 
-export const fileToBase64 = (file: File): Promise<string> => {
+export const getFilePath = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

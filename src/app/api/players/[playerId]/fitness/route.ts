@@ -1,11 +1,15 @@
+import { getErrorMessage } from "@/lib";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import PlayerModel from "@/models/player";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 ConnectMongoDb();
-export async function GET(request, { params }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { playerId: string } }
+) {
   try {
     const fitness = request.nextUrl.searchParams.get("fitness");
     await PlayerModel.updateOne(
@@ -18,7 +22,7 @@ export async function GET(request, { params }) {
     return NextResponse.json({ message: "Fitness updated", success: true });
   } catch (error) {
     return NextResponse.json({
-      message: "Fitness update failed. " + error.message,
+      message: getErrorMessage(error, "Fitness update failed"),
       success: false,
     });
   }

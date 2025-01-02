@@ -12,6 +12,7 @@ import DeletePlayer from "./DeletePlayer";
 import CardAndFit from "./CardAndFit";
 import PlayerProfileForm from "../../player-signing/Forms";
 import UpdatePlayerGallery, { PlayerGalleriesAdm } from "./GalleryForm";
+import Loader from "@/components/Loader";
 
 export default async function PlayerProfilePage({
   params,
@@ -19,7 +20,9 @@ export default async function PlayerProfilePage({
   params: { playerId: string };
 }) {
   const playerId = params.playerId;
-  const player = await GetPlayers(playerId);
+  const player = await GetPlayers(playerId ?? "");
+
+  if (!player) return <Loader message="Loading player..." />;
 
   return (
     <main className="relative bg-cover  ">
@@ -82,7 +85,7 @@ export default async function PlayerProfilePage({
       </div>
 
       {/* Sections */}
-      <main className="space-y-36 px-[2vw] pb-24 pt-7">
+      <main className="space-y-36 px-[2vw] pb-24 pt-7 ">
         <CardAndFit player={player} />
 
         <UpdatePlayerFitness player={player} />
@@ -90,29 +93,10 @@ export default async function PlayerProfilePage({
         <Performance playerId={playerId} />
 
         <section id="edit-player">
-          <p className="_title mt-3 text-[#f7bd53] __gradient1">
-            Editable form
-          </p>
           <PlayerProfileForm player={player} />
         </section>
 
-        {/* Scenes and moments */}
-        <section id="gallery">
-          <p className=" mt-3 text-gray-600 text-lg ">
-            Electric moments and scenes
-          </p>
-
-          <div className="bg-white rounded-xl space-y-6">
-            <PlayerGalleriesAdm player={player} />
-            <UpdatePlayerGallery
-              player={player}
-              folder={`players/${new Date().getFullYear()}/${
-                player?.firstName
-              }_${player?.lastName}`}
-            />
-          </div>
-        </section>
-
+        <UpdatePlayerGallery player={player} />
         <section>
           <h1 className="text-lg text-red-600 font-light mb-4">Danger zone</h1>
           <div className="grid items-start gap-10 md:flex flex-wrap  ">

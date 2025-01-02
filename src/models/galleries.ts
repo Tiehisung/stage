@@ -16,10 +16,10 @@ import mongoose, { Schema } from "mongoose";
 
 const gallerySchema = new Schema(
   {
-    title: String,
+    title: { type: String, required: true },
     description: { type: String, trim: true },
-    files: [{ type: Schema.Types.ObjectId, ref: "files" }], //Ref to file model
-    //Probable associated owners
+    files: [{}], // IFileProps[]
+    // Probable associated owners
     player: { type: Schema.Types.ObjectId, ref: "player" },
     manager: { type: Schema.Types.ObjectId, ref: "managers" },
   },

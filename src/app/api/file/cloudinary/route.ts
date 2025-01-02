@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     presetType,
     description,
   }: IFileUpload = await request.json();
+
   try {
     const uploadResult = await cloudinary.uploader
       .upload(path, {

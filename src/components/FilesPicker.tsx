@@ -6,7 +6,7 @@ import { CgClose } from "react-icons/cg";
 import Loader from "./Loader";
 import { getFilePath } from "@/lib";
 import { ChangeEvent } from "react";
-import { TConvertedFile } from "@/types/file";
+import { TConvertedFile } from "@/types";
 
  
 
@@ -28,16 +28,17 @@ export default function FilesPicker({
   nowUploading = null,
 }: FilesPickerProps) {
   //On file selection
-  const handleFileSelection = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelection = async (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
       for (let file of Array.from(selectedFiles)) {
+        const filePath =await getFilePath(file)
         setConvertedFiles((prev) => [
           ...prev,
           {
             name: file.name.substring(0, file.name.lastIndexOf(".")),
             type: file.type.split("/")[0],
-            path: getFilePath(file),
+            path: filePath,
           },
         ]);
       }

@@ -13,7 +13,6 @@ export async function GET(
   { params }: { params: { galleryId: string } }
 ) {
   const gallery = await GalleryModel.findById(params.galleryId)
-    .populate("files")
     .sort({ createdAt: "desc" });
   return NextResponse.json(gallery);
 }

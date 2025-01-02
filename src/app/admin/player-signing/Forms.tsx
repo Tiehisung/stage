@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { apiConfig } from "@/lib/configs";
 import { useRouter } from "next/navigation";
 import { FcCamera } from "react-icons/fc";
-import { fileToBase64, getErrorMessage } from "@/lib";
+import {   getErrorMessage, getFilePath } from "@/lib";
 import { IPlayer } from "@/app/players/page";
 import { IManager } from "../leadership/page";
 import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
@@ -41,7 +41,7 @@ export default function PlayerProfileForm({
   player?: IPlayer | null;
 }) {
   const router = useRouter();
-  const [imageFile, setImageFile] = useState(player?.avatar?.secure_url);
+  const [imageFile, setImageFile] = useState("");
   const [waiting, setWaiting] = useState(false);
   const [formData, setFormData] = useState(
     player || {
@@ -72,7 +72,7 @@ export default function PlayerProfileForm({
       return;
     }
 
-    setImageFile(await fileToBase64(selectedFile));
+    setImageFile(await getFilePath(selectedFile));
   }
 
   //Handle submit
@@ -295,7 +295,6 @@ export default function PlayerProfileForm({
                 primaryText={"Submit"}
                 className="primary__btn px-12 h-10 py-1 w-full flex-wrap-reverse"
               />
-              
             </div>
           </DiveUpwards>
         </TimelineFlowbite>

@@ -37,7 +37,7 @@ const playerSchema = new Schema(
     avatar: { type: Schema.Types.ObjectId, ref: "files" }, //Ref to file model
     manager: { fullname: String, phone: String, DoB: String, email: String },
     performance: { type: Schema.Types.Array, default: () => [] },
-    galleries: { type: Schema.Types.Array, default: () => [] },
+    galleries: [{ type: Schema.Types.ObjectId,ref:'galleries' }],
     isFit: { type: Boolean, default: () => true },
     card: { type: String, enum: ["yellow", "red"] },
     issues: { type: Schema.Types.Array, default: () => [] },

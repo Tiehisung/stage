@@ -7,17 +7,20 @@ import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
 import { DisplayFileRemote } from "@/components/files/FilesDisplay";
 import { TextArea } from "@/components/input/Inputs";
 import { getErrorMessage } from "@/lib";
-import { apiConfig, baseUrl } from "@/lib/configs";
-import { IFileUpload, TConvertedFile } from "@/types";
+import { apiConfig } from "@/lib/configs";
+import {
+  IFileProps,
+  IFileUpload,
+  IGalleryProps,
+  IResultProps,
+  TConvertedFile,
+} from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function UpdatePlayerGallery({
   player,
-  preset = "konjiehifc-preset",
-  folder = "players/" + new Date().getFullYear(),
-  presetType = "authenticated",
 }: {
   player: IPlayer;
   preset?: string;
@@ -39,7 +42,7 @@ export default function UpdatePlayerGallery({
     setWaiting(true);
     try {
       //Upload files individually
-      let uploaded = [];
+      let uploadedFiles: IFileProps[] = [];
       for (let file of convertedFiles) {
         setNowUploading(file);
         const body: IFileUpload = {
@@ -54,31 +57,46 @@ export default function UpdatePlayerGallery({
           cache: "no-cache",
           body: JSON.stringify(body),
         });
-        const result = await response.json();
 
-        if (result.success) {
-          uploaded.push(result.data);
+        const result: IResultProps<IFileProps> = await response.json();
+
+        if (result.success && result.data) {
+          uploadedFiles.push(result.data);
           setHiddenAfterUpload((p) => [...p, file]);
         }
         setProgressValue((p) => p + 1); //Watch progress
       }
 
+      //Create gallery------------------------------------------
+      const galleryResponse = await fetch(apiConfig.galleries, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-cache",
+        body: JSON.stringify({
+          description: filesDescription,
+          files: uploadedFiles,
+        }),
+      });
+      const savedGallery: IResultProps<IGalleryProps> =
+        await galleryResponse.json();
+      if (!savedGallery.success) return toast.error(savedGallery.message);
       //Clear files
       setConvertedFiles([]);
+
       //Save to db
-      const response = await fetch(
-        `${apiConfig.players}/${player._id}/gallery`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          cache: "no-cache",
-          body: JSON.stringify({
-            files: uploaded,
-            description: filesDescription,
-          }),
-        }
-      );
+      const response = await fetch(`${apiConfig.players}/${player?._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-cache",
+        body: JSON.stringify({
+          galleries: [
+            ...player.galleries.map((g) => g._id),
+            savedGallery.data?._id,
+          ],
+        }),
+      });
       const result = await response.json();
+      console.log({ result });
 
       toast(result.message, { type: result.success ? "success" : "error" });
       if (result.success) {
@@ -94,49 +112,62 @@ export default function UpdatePlayerGallery({
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="grid gap-3 ">
-      <div className={`border p-2 justify-center items-center`}>
-        <FilesPicker
-          wrapperStyles={""}
-          fileStyles={"w-40 h-40"}
-          setConvertedFiles={setConvertedFiles}
-          convertedFiles={convertedFiles}
-          hiddenFilesAfterUpload={hiddenAfterUpload}
-          nowUploading={nowUploading}
-        />
+    <div id="gallery">
+      <p className=" mt-3 text-gray-600 text-lg font-semibold">
+        Electric moments and scenes
+      </p>
 
-        <TextArea
-          label="Description(optional)"
-          labelStyles="_label"
-          name="filesDescription"
-          value={filesDescription}
-          onChange={(e) => setFilesDescription(e.target.value)}
-          wrapperStyles="mt-5"
-        />
+      <div className="bg-white rounded-xl space-y-6 w-full">
+        <form onSubmit={handleSubmit} className="grid gap-3 ">
+          <div className={`border p-2 justify-center items-center`}>
+            <FilesPicker
+              wrapperStyles={""}
+              fileStyles={"w-40 h-40"}
+              setConvertedFiles={setConvertedFiles}
+              convertedFiles={convertedFiles}
+              hiddenFilesAfterUpload={hiddenAfterUpload}
+              nowUploading={nowUploading}
+            />
 
-        <FormSubmitBtn
-          primaryText={
-            convertedFiles?.length == 1
-              ? "Upload file"
-              : "Upload " + convertedFiles?.length + " files"
-          }
-          className={`primary__btn px-4 py-2 my-4 rounded shadow`}
-          waiting={waiting}
-          disabled={waiting || convertedFiles?.length == 0}
-          waitingText={"Uploading, wait..."}
-        />
+            {convertedFiles?.length > 0 && (
+              <>
+                <TextArea
+                  label="Description(optional)"
+                  labelStyles="_label"
+                  name="filesDescription"
+                  value={filesDescription}
+                  onChange={(e) => setFilesDescription(e.target.value)}
+                  wrapperStyles="mt-5"
+                />
+
+                <FormSubmitBtn
+                  primaryText={
+                    convertedFiles?.length == 1
+                      ? "Upload file"
+                      : "Upload " + convertedFiles?.length + " files"
+                  }
+                  className={`primary__btn px-4 py-2 my-4 rounded shadow`}
+                  waiting={waiting}
+                  disabled={waiting || convertedFiles?.length == 0}
+                  waitingText={"Uploading, wait..."}
+                />
+              </>
+            )}
+          </div>
+
+          <ProgressBarCp
+            taskLabel="Uploading "
+            allowText={true}
+            progressValue={progressValue}
+            maxValue={convertedFiles?.length}
+            showProgress={waiting}
+            wrapperStyle={`relative ${convertedFiles.length == 0 && "hidden"}`}
+            type={3}
+          />
+        </form>
+        <PlayerGalleriesAdm player={player} />
       </div>
-
-      <ProgressBarCp
-        taskLabel="Uploading "
-        allowText={true}
-        progressValue={progressValue}
-        maxValue={convertedFiles?.length}
-        showProgress={waiting}
-        wrapperStyle={`relative ${convertedFiles.length == 0 && "hidden"}`}
-        type={3}
-      />
-    </form>
+    </div>
   );
 }
 
@@ -144,6 +175,7 @@ export function PlayerGalleriesAdm({ player }: { player: IPlayer }) {
   const galleries = player?.galleries?.sort(
     (a, b) => b.timestamp - a.timestamp
   );
+  console.log({ player });
 
   return (
     <div className="grid gap-5 items-center justify-evenly p-2 max-h-[70vh] overflow-y-auto">
@@ -167,6 +199,10 @@ export function PlayerGalleriesAdm({ player }: { player: IPlayer }) {
           </div>
         </div>
       ))}
+
+      {galleries?.length == 0 && (
+        <p className="text-center _label">No galleries available</p>
+      )}
     </div>
   );
 }

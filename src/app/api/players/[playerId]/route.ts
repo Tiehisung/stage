@@ -1,3 +1,5 @@
+import '@/models/file'
+import '@/models/galleries'
 import { getErrorMessage } from "@/lib";
 import { apiConfig } from "@/lib/configs";
 import { ConnectMongoDb } from "@/lib/dbconfig";
@@ -13,7 +15,9 @@ export async function GET(
   _: NextRequest,
   { params }: { params: { playerId: string } }
 ) {
-  const player = await PlayerModel.findById(params.playerId);
+  const player = await PlayerModel.findById(params.playerId)
+    
+    .populate("avatar");
   return NextResponse.json(player);
 }
 
@@ -38,12 +42,18 @@ export async function PATCH(
   }
 }
 
-//put
-export async function PUT(request: NextRequest) {
+//put Only relevant fields at a time
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { playerId: string } }
+) {
+  const playerId = params.playerId;
   const formData = await request.json();
   const { avatar, ...rest } = formData;
+  console.log({ formData });
   try {
-    if (typeof avatar === "string") {
+    if (avatar && typeof avatar === "string") {
+      //avatar string means new avatar;
       const uploaded = await fetch(apiConfig.fileUpload, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -63,20 +73,24 @@ export async function PUT(request: NextRequest) {
           data: uploadedImage,
         });
       }
-      const saved = await PlayerModel.findByIdAndUpdate(formData._id, {
+      const saved = await PlayerModel.findByIdAndUpdate(playerId, {
         $set: {
-          ...formData,
+          ...rest,
           avatar: uploadedImage.data ? uploadedImage.data._id : null,
         },
       });
       if (saved)
         return NextResponse.json({ message: "Update success", success: true });
     } else {
-      const saved = await PlayerModel.findByIdAndUpdate(formData._id, {
+      const saved = await PlayerModel.findByIdAndUpdate(playerId, {
         $set: { ...formData },
       });
-      if (saved)
-        return NextResponse.json({ message: "Update success", success: true });
+
+      return NextResponse.json({
+        message: "Update success",
+        success: true,
+        data: saved,
+      });
     }
   } catch (error) {
     return NextResponse.json({

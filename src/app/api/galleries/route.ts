@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
       ...newGallery,
       timestamp: Date.now(),
     });
+    console.log({ saved });
     if (saved)
       return NextResponse.json({ message: "Gallery created", success: true });
   } catch (error) {
@@ -29,7 +30,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(_: NextRequest) {
   const galleries = await GalleryModel.find({})
-    .populate("files")
-    .sort({ createdAt: "desc" });
+  .sort({ createdAt: "desc" });
   return NextResponse.json(galleries);
 }

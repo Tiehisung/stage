@@ -9,6 +9,7 @@ const PlayersPage = () => {
 export default PlayersPage;
 
 export type TPlayerGallery = {
+  _id: string;
   date: string;
   timestamp: number;
   description: string;
