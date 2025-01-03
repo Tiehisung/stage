@@ -1,6 +1,7 @@
+import { getErrorMessage } from "@/lib";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import ManagerModel from "@/models/manager";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
@@ -8,13 +9,13 @@ ConnectMongoDb();
 
 // GET
 
-export async function GET(request, { params }) {
+export async function GET(request: NextRequest, { params }: { params: { managerId: string } }) {
   const manager = await ManagerModel.findById(params.managerId);
   return NextResponse.json(manager);
 }
 
 // PUT
-export async function PUT(request, { params }) {
+export async function PUT(request: Request, { params }: { params: { managerId: string } }) {
   try {
     const { fullname, phone, email, dob, dateSigned, role, image } =
       await request.json();
@@ -28,7 +29,7 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ message: "Updated", success: true });
   } catch (error) {
     return NextResponse.json({
-      message: "Failed, " + error.message,
+      message: getErrorMessage(error),
       success: false,
     });
   }

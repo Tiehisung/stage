@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import ManagerModel from "@/models/manager";
 import { NextRequest, NextResponse } from "next/server";
@@ -27,7 +28,7 @@ export async function POST(request:NextRequest) {
     if (saved) return NextResponse.json({ message: "Created", success: true });
   } catch (error) {
     return NextResponse.json({
-      message: "Failed, " + error.message,
+      message:  getErrorMessage(error),
       success: false,
     });
   }
