@@ -11,7 +11,7 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import DeletePlayer from "./DeletePlayer";
 import CardAndFit from "./CardAndFit";
 import PlayerProfileForm from "../../player-signing/Forms";
-import UpdatePlayerGallery, { PlayerGalleriesAdm } from "./GalleryForm";
+import UpdatePlayerGallery  from "./GalleryForm";
 import Loader from "@/components/Loader";
 
 export default async function PlayerProfilePage({

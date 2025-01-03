@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(_: NextRequest) {
+export async function GET( ) {
   const galleries = await GalleryModel.find({}).sort({ createdAt: "desc" });
   return NextResponse.json(galleries);
 }

@@ -32,10 +32,10 @@ export default function DonateToSponsor({ sponsorId, businessName }: DonateToSpo
 
   const [attachedFiles, setAttachedFiles] = useState<IFileUpload[]>([]);
   async function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>) {
-    let selectedFiles = event.target.files;
+    const selectedFiles = event.target.files;
 
     if (!selectedFiles || selectedFiles.length == 0) return;
-    for (let file of Array.from(selectedFiles)) {
+    for (const file of Array.from(selectedFiles)) {
       if (file.size > 1024000) {
         toast.error(file.size + " is too large. Picture should not exceed 1mb");
         return;

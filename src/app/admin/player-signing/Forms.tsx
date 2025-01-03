@@ -15,7 +15,6 @@ import { RxAvatar } from "react-icons/rx";
 import { BiSolidUserDetail } from "react-icons/bi";
 import { GrUserManager } from "react-icons/gr";
 import DiveUpwards from "@/components/Animate/DiveUp";
-import { MdSend } from "react-icons/md";
 
 const dataModel = {
   firstName: "",
@@ -63,7 +62,7 @@ export default function PlayerProfileForm({
   // console.log("player at edit",player)
   //Handle change image
   async function handleImageSelection(e: React.ChangeEvent<HTMLInputElement>) {
-    let selectedFile = e.target?.files?.[0] as File;
+    const selectedFile = e.target?.files?.[0] as File;
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
       toast.error(
@@ -106,7 +105,11 @@ export default function PlayerProfileForm({
       router.refresh();
     }
   };
-  const icons = [<RxAvatar />, <BiSolidUserDetail />, <GrUserManager />];
+  const icons = [
+    <RxAvatar key="avatar" />,
+    <BiSolidUserDetail key="userDetail" />,
+    <GrUserManager key="userManager" />
+  ];
 
   return (
     <section className="">

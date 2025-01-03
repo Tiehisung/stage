@@ -40,7 +40,7 @@ export default async function AdminSponsor({ params }: { params: Params }) {
             </h1>
             <br />
             <DonateToSponsor
-              sponsorId={foundById?._id!}
+              sponsorId={foundById?._id as string}
               businessName={foundById?.businessName || "anonymous"}
             />
           </li>
@@ -58,7 +58,7 @@ export default async function AdminSponsor({ params }: { params: Params }) {
               Delete sponsor
             </h1>
             <br />
-            <DeleteSponsor sponsorId={foundById?._id!} />
+            <DeleteSponsor sponsorId={foundById?._id as string} />
           </li>
         </ul>
       </div>

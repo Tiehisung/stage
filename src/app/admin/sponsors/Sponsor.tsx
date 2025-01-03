@@ -92,8 +92,8 @@ export function AddNewSponsor() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   //Handle change image
-  function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>): void {
-    let selectedFile = event.target.files?.[0];
+  async function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>): Promise<void> {
+    const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
       toast.error(
@@ -101,7 +101,7 @@ export function AddNewSponsor() {
       );
       return;
     }
-    setImageFile(getFilePath(selectedFile));
+    setImageFile(await getFilePath(selectedFile));
   }
   const [toggleNewSponsorForm, setToggleNewSponsorForm] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

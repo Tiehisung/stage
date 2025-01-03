@@ -18,14 +18,13 @@ import { RiTeamFill } from "react-icons/ri";
 import { BsNewspaper } from "react-icons/bs";
 import { FaNewspaper } from "react-icons/fa";
 import { FcManager } from "react-icons/fc";
-import { useSession } from "next-auth/react";
 import { ReactNode } from "react";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { VscLiveShare } from "react-icons/vsc";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [openSidebar, setOpenSidebar] = useState(false);
-  const { data: session, status } = useSession({ required: true });
+  // const { data: session, status } = useSession({ required: true });
   return (
     <main className="md:flex relative">
       <LeftPane />

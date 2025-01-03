@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import UserModel from "@/models/user";
 import { IUser } from "@/types/user";
 
-let admins = [
+const admins = [
   "tiehisungai@gmail.com",
   "isoskode@gmail.com",
   "codecrusadez@gmail.com",

@@ -1,25 +1,31 @@
 "use client";
 
 import { IPlayer } from "@/app/players/page";
-import { apiConfig,   } from "@/lib/configs";
+import { apiConfig } from "@/lib/configs";
+import { IResultProps } from "@/types";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
+import { toast } from "react-toastify";
 
-export default function ChangePlayerTeam({ player }:{player:IPlayer}) {
+export default function ChangePlayerTeam({ player }: { player: IPlayer }) {
   const router = useRouter();
   const [selectedTeam, setSelectedTeam] = useState(player.training.team);
-  
-  const handleOnChange = async (e:ChangeEvent<HTMLInputElement>) => {
+
+  const handleOnChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSelectedTeam(value);
-    const response = await fetch(`${apiConfig.players}/${player._id}/training`, {
-      cache: "no-cache",
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(value),
-    });
-    const result = await response.json();
-    // console.log(result);
+    const response = await fetch(
+      `${apiConfig.players}/${player._id}/training`,
+      {
+        cache: "no-cache",
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(value),
+      }
+    );
+    const result: IResultProps = await response.json();
+
+    toast(result.message, { type: result.success ? "success" : "error" });
     router.refresh();
   };
 

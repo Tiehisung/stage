@@ -42,8 +42,8 @@ export default function UpdatePlayerGallery({
     setWaiting(true);
     try {
       //Upload files individually
-      let uploadedFiles: IFileProps[] = [];
-      for (let file of convertedFiles) {
+      const uploadedFiles: IFileProps[] = [];
+      for (const file of convertedFiles) {
         setNowUploading(file);
         const body: IFileUpload = {
           name: file.name,

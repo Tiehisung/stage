@@ -1,6 +1,6 @@
 "use client";
 
-import { apiConfig, baseUrl } from "@/lib/configs";
+import { apiConfig,   } from "@/lib/configs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FcCamera } from "react-icons/fc";
@@ -38,7 +38,7 @@ export default function NewManagerForm({}) {
   };
 
   async function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>) {
-    let selectedFile = event.target.files ? event.target.files[0] : null;
+    const selectedFile = event.target.files ? event.target.files[0] : null;
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
       toast.error(
@@ -78,7 +78,7 @@ export default function NewManagerForm({}) {
       }
 
       //Proceed to save to database
-      let apiRoute = apiConfig.managers;
+      const apiRoute = apiConfig.managers;
       const response = await fetch(apiRoute, {
         body: JSON.stringify({ ...formData, image: uploadRsp.data }),
         cache: "no-cache",

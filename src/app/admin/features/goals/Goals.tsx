@@ -1,24 +1,15 @@
 "use client";
 
 import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
-import { IMatchProps } from "@/components/fixturesAndResults";
 import { ResponsiveModal } from "@/components/modals/Responsive";
-import matches from "@/data/matches";
 import _players from "@/data/players";
-import { getTeams } from "@/lib";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Select from "react-select";
 
 const HomeTeamGoalForm = ({}) => {
-  const router = useRouter();
   const [waiting, setWaiting] = useState(false);
-
-  const liveMatch = matches[0];
-  const [teamType, setTeamType] = useState<string>(""); //home | away
-  const { home, away } = getTeams(liveMatch as IMatchProps);
-
-  const [scorerId, setScorerId] = useState("");
+  const [scorerId, setScorerId] = useState<string | null>(null);
+  console.log(scorerId,setWaiting);
 
   const onfieldPlayers = _players.map((p) => ({
     label: `${p.lastName} ${p.firstName}`,
@@ -62,13 +53,7 @@ const HomeTeamGoalForm = ({}) => {
 export default HomeTeamGoalForm;
 
 export const AwayTeamGoalForm = ({}) => {
-  const router = useRouter();
   const [waiting, setWaiting] = useState(false);
-
-  const liveMatch = matches[0];
-  const { home, away } = getTeams(liveMatch as IMatchProps);
-
-  const [scorerId, setScorerId] = useState("");
 
   return (
     <ResponsiveModal modalId="away-team-modal" trigger="Goal">
@@ -101,8 +86,8 @@ export const AwayTeamGoalForm = ({}) => {
 export const GoalForms = () => {
   return (
     <div className="flex w-full h-fit border rounded-mx p-3">
-      <HomeTeamGoalForm/>
-      <AwayTeamGoalForm/>
+      <HomeTeamGoalForm />
+      <AwayTeamGoalForm />
     </div>
   );
 };

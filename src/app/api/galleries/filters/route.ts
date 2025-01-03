@@ -1,7 +1,6 @@
 import { getErrorMessage } from "@/lib";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import GalleryModel from "@/models/galleries";
-import { IGalleryProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import "@/models/file";
 

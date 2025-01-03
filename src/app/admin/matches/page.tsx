@@ -2,7 +2,7 @@ import { apiConfig } from "@/lib/configs";
 import { DisplayFixtures } from "./DisplayFixtures";
 import CreateMatch from "./CreateFixture";
 import { GetTeams } from "../features/teams/page";
-import { MatchStatus, TMatchType } from "@/components/fixturesAndResults";
+import { MatchStatus,   } from "@/components/fixturesAndResults";
 
 export interface IGetMatchesProps {
   status?: MatchStatus;

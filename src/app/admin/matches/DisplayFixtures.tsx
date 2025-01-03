@@ -18,7 +18,6 @@ interface DisplayFixturesProps {
 // Fixture is  match that is not yet played successfully
 
 export function DisplayFixtures({ fixtures, teams }: DisplayFixturesProps) {
-  const [fixtureToEdit, setFixtureToEdit] = useState<IMatchProps | null>(null);
 
   return (
     <div>

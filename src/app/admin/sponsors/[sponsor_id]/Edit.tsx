@@ -24,7 +24,7 @@ export default function EditSponsor({ sponsor }: { sponsor: ISponsorProps }) {
   };
 
   async function handleImageSelection(event: ChangeEvent<HTMLInputElement>) {
-    let selectedFile = event.target.files ? event.target.files[0] : null;
+    const selectedFile = event.target.files ? event.target.files[0] : null;
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
       toast.error(" File too large. Picture should not exceed 3.5mb");
