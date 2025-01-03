@@ -12,7 +12,7 @@ export default function ScrollToPointCp({
   className = " absolute",
 }: ScrollToPointCpProps) {
   const handleScrollToPoint = () => {
-    let targetSection = document.getElementById(sectionId);
+    const targetSection = document.getElementById(sectionId);
     if (targetSection) {
       targetSection.scrollIntoView({ behavior: "smooth" });
     }
@@ -43,7 +43,7 @@ export function ScrollToPointBtn({
   title = "",
 }: ScrollToPointBtnProps) {
   const handleScrollToPoint = () => {
-    let targetSection = document.getElementById(sectionId);
+    const targetSection = document.getElementById(sectionId);
     if (targetSection) {
       targetSection.scrollIntoView({ behavior: "smooth" });
     }

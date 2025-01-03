@@ -8,6 +8,9 @@ const NewsPage = () => {
 export default NewsPage;
 
 export interface INewsProps {
+  stats: {
+    isTrending: boolean;isLatest:boolean
+};
   _id: string;
   headline: {
     text: string;

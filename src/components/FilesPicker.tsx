@@ -31,7 +31,7 @@ export default function FilesPicker({
   const handleFileSelection = async (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
-      for (let file of Array.from(selectedFiles)) {
+      for (const file of Array.from(selectedFiles)) {
         const filePath =await getFilePath(file)
         setConvertedFiles((prev) => [
           ...prev,

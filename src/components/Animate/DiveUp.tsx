@@ -23,7 +23,7 @@ const DiveUpwards = ({
     const timeout = setTimeout(() => {
       setDelayOn(false);
     }, 1);
-    () => clearTimeout(timeout);
+    return () => clearTimeout(timeout);
   }, [dependency]);
 
   if (delayOn) return null;

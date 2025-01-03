@@ -12,6 +12,7 @@ const MatchesSection = ({ matches }: { matches: IMatchProps[] }) => {
   const filters = ["home", "away", "lost", "wins", "draws"];
   const [_selectedFilter, setSelectedFilter] = useState<ISelectOptionLV>();
 
+  console.log(_selectedFilter)
   return (
     <section id="matches">
       <header className="flex justify-between items-center gap-4">

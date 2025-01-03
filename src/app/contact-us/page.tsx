@@ -5,7 +5,6 @@ import { AiFillInstagram } from "react-icons/ai";
 import { AiFillTwitterSquare } from "react-icons/ai";
 import { AiFillYoutube } from "react-icons/ai";
 import { FaWhatsapp } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { getErrorMessage } from "@/lib";
@@ -18,7 +17,7 @@ const formModel = {
 };
 
 export default function Contact() {
-  const router = useRouter();
+  
   const [formData, setFormdata] = useState({ ...formModel });
 
   function handleOnchange(

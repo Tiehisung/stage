@@ -1,8 +1,9 @@
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/models/user";
 import bcrypt from "bcryptjs";
+import UserModel from "@/models/user";
+import { IUser } from "@/types/user";
 
 let admins = [
   "tiehisungai@gmail.com",
@@ -15,22 +16,21 @@ export const authOptions = {
   providers: [
     GithubProvider({
       profile(profile) {
-        console.log("Github profile", profile);
         let userRole = "Github User";
-        if (admins.includes(profile?.email)) {
+        if (admins.includes(profile?.email!)) {
           userRole = "admin";
         }
         return {
           ...profile,
+          id: profile.id.toString(),
           role: userRole,
         };
       },
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
     GoogleProvider({
       profile(profile) {
-        console.log("Google profile", profile);
         let userRole = "Github User";
         if (admins.includes(profile?.email)) {
           userRole = "admin";
@@ -41,8 +41,8 @@ export const authOptions = {
           role: userRole,
         };
       },
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
     }),
 
     //Credentials
@@ -62,26 +62,27 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          const foundUser = await User.findOne({ email: credentials.email })
+          const foundUser = (await UserModel.findOne({
+            email: credentials?.email,
+          })
             .lean()
-            .exec();
+            .exec()) as IUser | null;
           if (foundUser) {
             const matched = await bcrypt.compare(
-              credentials.password,
-              foundUser.password
+              credentials?.password!,
+              foundUser.password!
             );
             //Compare passwords
             if (matched) {
-              delete foundUser.password;
               //Assign role
+              const { password, ...rest } = foundUser;
+              const userWithId = { ...rest, id: foundUser._id.toString() };
               if (admins.includes(foundUser.email)) {
-                foundUser["role"] = "admin";
-                return foundUser;
+                return { ...userWithId, role: "admin" };
               }
 
               //Normal user
-              foundUser.role = "User";
-              return foundUser;
+              return { ...userWithId, role: "guest" };
             }
           }
         } catch (error) {
@@ -94,15 +95,21 @@ export const authOptions = {
 
   callbacks: {
     //To be used at server
-    async jwt({ user, token }) {
+    async jwt({ user, token }: { user?: IUser; token: { role?: string } }) {
       if (user) {
         token.role = user.role;
       }
       return token;
     },
     //Available for client
-    async session({ session, token }) {
-      if (session?.user) session.user.role = token?.role;
+    async session({
+      session,
+      token,
+    }: {
+      session: { user: IUser };
+      token: { role?: string };
+    }) {
+      if (session?.user) session.user.role = token?.role as IUser["role"];
       return session;
     },
   },

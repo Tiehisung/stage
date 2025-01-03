@@ -1,8 +1,7 @@
-import { isNumber } from "./OutputTable";
 
 export function VerticalOutPutTable({
   body = [{ key: "key", value: "value" }],
-  style = { keyTd, valueTd, tr },
+  style = { keyTd: "", valueTd: "", tr: "" },
 }) {
   return (
     <table className={`text-sm ${body?.length > 0 ? "flex" : "hidden"}`}>

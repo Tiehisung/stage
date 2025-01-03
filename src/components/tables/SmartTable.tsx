@@ -76,7 +76,7 @@ export default function SmartTable({
   const handleAddRow = () => {
     setTableData((prev) => ({
       ...prev,
-      body: [...prev.body, [...prev.headers.map((h) => "")]],
+      body: [...prev.body, [...prev.headers.map(() => "")]],
     }));
   };
 

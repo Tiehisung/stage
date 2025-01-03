@@ -60,6 +60,7 @@ export const apiConfig = {
   players: `${baseUrl()}/api/players`,
   managers: `${baseUrl()}/api/managers`,
   galleries: `${baseUrl()}/api/galleries`,
+  messages: `${baseUrl()}/api/messages`,
   file: `${baseUrl()}/api/file`, //Interacts with db
   fileUpload: `${baseUrl()}/api/file/cloudinary`, //Interacts with storage(cld)
 };

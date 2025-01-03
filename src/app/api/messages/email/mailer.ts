@@ -1,13 +1,18 @@
-import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+interface MailerProps {
+  email?: string;
+  subject?: string;
+  text?: string;
+  html?: string;
+}
+
 export const Mailer = async ({
-  email,
+  email = '',
   subject = "Receipt of message",
   text = "",
-  type = "sent",
   html = "<h1>Thank you for contacting us.</h1><br/><hr/><p style={{border:'solid 1px gray',borderRadius:'4px',padding:'3px 2px'}}>Click <a href='https://konjiehifc.vercel.app/'> here</a> to visit the site.</p>",
-}) => {
+}: MailerProps) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "stmp.gmail.com",

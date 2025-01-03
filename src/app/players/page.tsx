@@ -17,6 +17,7 @@ export type TPlayerGallery = {
 };
 
 export interface IPlayer {
+  training: { team: string };
   medicals: { fitness: string }[];
   galleries: TPlayerGallery[];
   card: "yellow" | "red";

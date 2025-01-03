@@ -1,4 +1,4 @@
-import { IPlayer } from "@/app/admin/players/page";
+import { IPlayer } from "@/app/players/page";
 import _players from "@/data/players";
 import Image from "next/image";
 import React from "react";
@@ -32,16 +32,16 @@ export const PlayersStatsCard: React.FC<PlayersStatsProps> = ({
           }
         >
           <div>
-            <h4 className="text-xl font-bold">{featuredPlayer.lastName}</h4>
+            <h4 className="text-xl font-bold">{featuredPlayer?.lastName}</h4>
             <p className="text-xl md:text-2xl font-semibold text-blue-600">
-              {`${featuredPlayer.value} ${tag}`}
+              {`${featuredPlayer?.value} ${tag}`}
             </p>
           </div>
 
           <Image
             width={500}
             height={500}
-            src={featuredPlayer.avatar?.secure_url!}
+            src={featuredPlayer?.avatar?.secure_url as string}
             alt={"featuredPlayer"}
             className=" absolute -top-10 right-6 w-24 h-24 rounded-full "
           />
@@ -49,7 +49,7 @@ export const PlayersStatsCard: React.FC<PlayersStatsProps> = ({
 
         {/* Other Players */}
         <section className="space-y-3 px-4">
-          {otherPlayers.map((player, index) => (
+          {otherPlayers?.map((player, index) => (
             <div
               key={index}
               className="flex justify-between items-center border-b border-gray-200 pb-3"
@@ -58,15 +58,15 @@ export const PlayersStatsCard: React.FC<PlayersStatsProps> = ({
                 <Image
                   width={500}
                   height={500}
-                  src={player.avatar?.secure_url!}
+                  src={player?.avatar?.secure_url as string}
                   alt={"player"}
                   className="w-10 h-10 rounded-full"
                 />
                 <span className="text-sm font-medium line-clamp-1 whitespace-nowrap">
-                  {player.firstName + " " + player.lastName}
+                  {player?.firstName + " " + player?.lastName}
                 </span>
               </div>
-              <span className="text-lg font-bold">{player.value}</span>
+              <span className="text-lg font-bold">{player?.value}</span>
             </div>
           ))}
         </section>

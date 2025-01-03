@@ -10,7 +10,7 @@ ConnectMongoDb();
 export async function POST(request: NextRequest) {
   const formData = await request.json();
   console.log("formData", formData);
-  const { avatar, ...rest } = formData;
+  const { avatar,  } = formData;
   if (typeof avatar === "string") {
     //Upload image to cloudinary
 

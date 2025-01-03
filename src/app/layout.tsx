@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <AuthProvider>
             <HeaderCp />
             {/* <ArmSearcherAtHome /> */}
-            <div className={` border-red-400 `}>
+            <div className={`min-h-screen `}>
               {children}
             </div>
             <FooterCP />

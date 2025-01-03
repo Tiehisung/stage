@@ -1,4 +1,3 @@
-import { ToastContainer } from "react-toastify";
 import NewManagerForm from "./CreateLeader";
 import ManagerFormModal from "./EditManager";
 import { baseUrl } from "@/lib/configs";
@@ -76,7 +75,6 @@ export default async function Page() {
       </ul>
 
       <CaptaincyAdm />
-      <ToastContainer />
     </main>
   );
 }

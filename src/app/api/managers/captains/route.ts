@@ -1,23 +1,20 @@
+import { getErrorMessage } from "@/lib";
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import PlayerModel from "@/models/player";
-import SpecialdataModel from "@/models/specialdata";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 ConnectMongoDb();
 export async function GET() {
   const players = await PlayerModel.find();
-  const main = players.find((player) => player.captaincy == "captain");
-  const deputy1 = players.find((player) => player.captaincy == "deputy1");
-  const deputy2 = players.find((player) => player.captaincy == "deputy2");
   const captains = players
     .filter((player) => player.captaincy)
     .sort((a, b) => a.captaincy - b.captaincy);
   return NextResponse.json(captains);
 }
 
-export async function PUT(request) {
+export async function PUT(request:NextRequest) {
   try {
     const { captaincy, playerId } = await request.json();
 
@@ -39,7 +36,7 @@ export async function PUT(request) {
       return NextResponse.json({ message: "Updated", success: true });
   } catch (error) {
     return NextResponse.json({
-      message: "Failed, " + error.message,
+      message:  getErrorMessage(error),
       success: false,
     });
   }

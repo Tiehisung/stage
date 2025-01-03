@@ -16,7 +16,7 @@ export async function DELETE(request, { params }) {
     //First retrieve item
     const foundNewsItem = await NewsModel.findById(newsId);
     //Then archive
-    const archived = await ArchivesModel.updateOne(
+     await ArchivesModel.updateOne(
       { category: "deleted_news" },
       { $push: { data: { ...foundNewsItem, isLatest: false } } }
     );

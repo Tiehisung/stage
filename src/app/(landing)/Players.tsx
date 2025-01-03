@@ -16,7 +16,7 @@ const LandingPlayers = async () => {
         {players?.map((player, index: number) => (
           <DiveUpwards key={index}>
             <Image
-              src={player?.image?.secure_url}
+              src={player?.avatar?.secure_url}
               width={200}
               height={200}
               alt="player"

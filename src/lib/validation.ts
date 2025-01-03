@@ -4,25 +4,13 @@
  * Accepted characters include [QWERTYUIOPASDFGHJKLZXCVBNM_-0123456789]
  * @returns Character caught or "". Use "" to determine validity as not character is returned.
  */
-export const validateChars = (
+export const getInvalidChar = (
   input: string,
   valid = "QWERTYUIOPASDFGHJKLZXCVBNM_-0123456789"
-) => {
-  for (let x of input.toLowerCase()) {
-    if (!valid.toLowerCase().includes(x)) {
-      return "` " + x + " ` not valid input.";
-    }
+): string => {
+  for (const char of input) {
+    if (!valid.includes(char.toUpperCase())) return char; 
   }
   return "";
 };
-export const inputValidator = (
-  input: string,
-  valid = "QWERTYUIOPASDFGHJKLZXCVBNM_-0123456789"
-) => {
-  for (let x of input.toLowerCase()) {
-    if (!valid.toLowerCase().includes(x + "")) {
-      return x;
-    }
-  }
-  return "";
-};
+ 

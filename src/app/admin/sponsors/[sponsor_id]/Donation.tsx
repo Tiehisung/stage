@@ -8,6 +8,7 @@ import { baseUrl } from "@/lib/configs";
 import { toast } from "react-toastify";
 import { getFilePath } from "@/lib";
 import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
+import { IFileUpload } from "@/types";
 
 interface DonateToSponsorProps {
   sponsorId: string;
@@ -29,8 +30,8 @@ export default function DonateToSponsor({ sponsorId, businessName }: DonateToSpo
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const [attachedFiles, setAttachedFiles] = useState<{ fileName: string; filePath: string; fileType: string; preset: string; folder: string; presetType: string; }[]>([]);
-  function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>) {
+  const [attachedFiles, setAttachedFiles] = useState<IFileUpload[]>([]);
+  async function handleImageSelection(event: React.ChangeEvent<HTMLInputElement>) {
     let selectedFiles = event.target.files;
 
     if (!selectedFiles || selectedFiles.length == 0) return;
@@ -39,16 +40,14 @@ export default function DonateToSponsor({ sponsorId, businessName }: DonateToSpo
         toast.error(file.size + " is too large. Picture should not exceed 1mb");
         return;
       }
-
+const path =await getFilePath(file)
       setAttachedFiles((prev) => [
         ...prev,
         {
-          fileName: file.name,
-          filePath: getFilePath(file),
-          fileType: "image",
-          preset: "konjiehifc-preset",
+          name: file.name,
+          path: path,
+          type: "image",
           folder: "sponsors/donations/" + businessName,
-          presetType: "authenticated",
         },
       ]);
        
@@ -187,7 +186,7 @@ export default function DonateToSponsor({ sponsorId, businessName }: DonateToSpo
         {attachedFiles
           ? attachedFiles.map((file, index) => (
               <Image
-                src={file.filePath}
+                src={file.path}
                 width={300}
                 height={300}
                 alt="desc image"

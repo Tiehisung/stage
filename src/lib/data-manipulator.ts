@@ -1,6 +1,6 @@
 export function generateUniqueValues(array = []) {
-  let arrayToSet = new Set(array);
-  let setToArray = Array.from(arrayToSet);
+  const arrayToSet = new Set(array);
+  const setToArray = Array.from(arrayToSet);
   return setToArray;
 }
 export function createObjectFromArray(keys: string[], values: unknown[]) {

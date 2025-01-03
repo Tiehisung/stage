@@ -1,8 +1,9 @@
+import { IPlayer } from "@/app/players/page";
 import { GetPlayers } from "../players/page";
 import ChangePlayerTeam from "./ChangeTeam";
 
 export default async function TrainingSettingsAdm() {
-  const players = await GetPlayers();
+  const players:IPlayer[] = await GetPlayers();
   const teamA = players.filter(
     (player) => player.training?.team?.toLowerCase() == "a"
   );

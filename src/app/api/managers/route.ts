@@ -1,6 +1,6 @@
 import { ConnectMongoDb } from "@/lib/dbconfig";
 import ManagerModel from "@/models/manager";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export async function GET() {
   return NextResponse.json(managers);
 }
 
-export async function POST(request) {
+export async function POST(request:NextRequest) {
   try {
     const { fullname, phone, email, dob, dateSigned, role, image } =
       await request.json();

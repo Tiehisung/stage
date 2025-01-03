@@ -3,11 +3,17 @@
 import { useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
+interface SecretInputProps {
+  styles?: string;
+  setSecret: (value: string) => void;
+  label?: string;
+}
+
 export default function SecretInput({
   styles = "",
   setSecret,
   label = "Password",
-}) {
+}: SecretInputProps) {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <div className={styles}>
@@ -25,11 +31,11 @@ export default function SecretInput({
           className="absolute right-2 top-2 hover:bg-slate-200 text-blue-500 rounded-full p-1"
         >
           <VscEye
-            onClick={(e) => setShowPassword(false)}
+            onClick={() => setShowPassword(false)}
             className={`${showPassword ? "block" : "hidden"}`}
           />
           <VscEyeClosed
-            onClick={(e) => setShowPassword(true)}
+            onClick={() => setShowPassword(true)}
             className={`${showPassword ? "hidden" : "block"}`}
           />
         </button>

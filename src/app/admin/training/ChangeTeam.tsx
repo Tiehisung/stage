@@ -1,16 +1,18 @@
 "use client";
 
-import { baseUrl } from "@/lib/configs";
+import { IPlayer } from "@/app/players/page";
+import { apiConfig,   } from "@/lib/configs";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-export default function ChangePlayerTeam({ player }) {
+export default function ChangePlayerTeam({ player }:{player:IPlayer}) {
   const router = useRouter();
   const [selectedTeam, setSelectedTeam] = useState(player.training.team);
-  const handleOnChange = async (e) => {
+  
+  const handleOnChange = async (e:ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSelectedTeam(value);
-    const response = await fetch(baseUrl() + "/api/players/" + player._id+"/training", {
+    const response = await fetch(`${apiConfig.players}/${player._id}/training`, {
       cache: "no-cache",
       headers: { "Content-Type": "application/json" },
       method: "POST",

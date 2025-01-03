@@ -1,11 +1,10 @@
 "use client";
 
-import { baseUrl } from "@/lib/configs";
+import { apiConfig, baseUrl } from "@/lib/configs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FcCamera } from "react-icons/fc";
-import defaultLogo from "@/public/images/breakfast2.jpg";
 import { toast } from "react-toastify";
 import { ISponsorProps } from "@/app/sponsorship/page";
 import { getFilePath } from "@/lib";
@@ -24,14 +23,14 @@ export default function EditSponsor({ sponsor }: { sponsor: ISponsorProps }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  function handleImageSelection(event: ChangeEvent<HTMLInputElement>) {
+  async function handleImageSelection(event: ChangeEvent<HTMLInputElement>) {
     let selectedFile = event.target.files ? event.target.files[0] : null;
     if (!selectedFile) return;
     if (selectedFile.size > 3524000) {
       toast.error(" File too large. Picture should not exceed 3.5mb");
       return;
     }
-    setImageFile(getFilePath(selectedFile));
+    setImageFile(await getFilePath(selectedFile));
   }
 
   //Handle submit
@@ -42,14 +41,14 @@ export default function EditSponsor({ sponsor }: { sponsor: ISponsorProps }) {
 
     if (imageFile) {
       //Upload logo
-      const upload = await fetch(baseUrl() + "/api/files/upload", {
+      const upload = await fetch(apiConfig.fileUpload , {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fileName: formData.businessName,
-          filePath: imageFile,
-          fileType: "image",
-          preset: "konjiehifc-preset",
+          name: formData.businessName,
+          path: imageFile,
+          type: "image",
+          preset: "konjiehifc",
           folder: "sponsors/logos",
           presetType: "authenticated",
         }),
@@ -105,7 +104,7 @@ export default function EditSponsor({ sponsor }: { sponsor: ISponsorProps }) {
       <div className=" relative">
         <p className="font-light">Logo</p>
         <Image
-          src={imageFile || sponsor.logo.secure_url || defaultLogo}
+          src={imageFile || sponsor.logo.secure_url }
           width={300}
           height={300}
           alt="desc image"

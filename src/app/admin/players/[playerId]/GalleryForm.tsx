@@ -4,7 +4,7 @@ import { IPlayer } from "@/app/players/page";
 import FilesPicker from "@/components/FilesPicker";
 import { ProgressBarCp } from "@/components/ProgresssBar";
 import FormSubmitBtn from "@/components/buttons/SubmitAndClick";
-import { DisplayFileRemote } from "@/components/files/FilesDisplay";
+import FileRenderer from "@/components/files/FileRender";
 import { TextArea } from "@/components/input/Inputs";
 import { getErrorMessage } from "@/lib";
 import { apiConfig } from "@/lib/configs";
@@ -189,10 +189,10 @@ export function PlayerGalleriesAdm({ player }: { player: IPlayer }) {
           </h6>
           <div className="flex flex-wrap gap-2 ">
             {galleryObj?.files?.map((gfile, fgIndex) => (
-              <DisplayFileRemote
+              <FileRenderer
                 file={gfile}
                 key={fgIndex}
-                wrapperStyle="h-40 w-40 overflow-hidden rounded hover:opacity-75 hover:ring hover:scale-95 transition-transform"
+                className="max-h-72 w-auto overflow-hidden rounded hover:ring hover:scale-105 slowTrans"
               />
             ))}
           </div>

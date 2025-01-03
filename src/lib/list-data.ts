@@ -3,7 +3,7 @@ export const getYears = (
   to = new Date().getFullYear(),
   asc = false
 ) => {
-  let years = [];
+  const years = [];
   while (from <= to) {
     years.push(from);
     from = from + 1;
